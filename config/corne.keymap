@@ -1,6 +1,5 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
-#include <dt-bindings/zmk/consumer.h>
 
 / {
     behaviors {
@@ -50,66 +49,66 @@
     keymap {
         compatible = "zmk,keymap";
 
-        // ╔═══════════════════════════════════════════════════════╗
-        // ║  CAPA 0 — escritura                                   ║
-        // ╠══════╦══╦══╦══╦══╦══╬══╦══╦══╦══╦══╦═══════╣
-        // ║ ESC  ║q ║w ║e ║r ║t ║y ║u ║i ║o ║p ║  +/−  ║
-        // ╠══════╬══╬══╬══╬══╬══╬══╬══╬══╬══╬══╬═══════╣
-        // ║ TAB  ║a ║s ║d ║f ║g ║h ║j ║k ║l ║:/;║ BSPC  ║
-        // ╠══════╬══╬══╬══╬══╬══╬══╬══╬══╬══╬══╬═══════╣
-        // ║ CTRL ║z ║x ║c ║v ║b ║n ║m ║,/" ║./> ║/? ║ ⇧🌐  ║
-        // ╚══════╩══╩══╩═══╦══╦══╬══╦══╦═══╩══╩══╩═══════╝
-        //                  ║⌥ ║⌘ ║⇧║RET║SPC║mo1║
-        //                  ╚══╩══╩══╩══╩══╩══╝
+        // ╔══════════════════════════════════════════════════════════╗
+        // ║  CAPA 0 — escritura                                      ║
+        // ╠══════╦══╦══╦══╦══╦══╬══╦══╦══╦══╦══╦══════════╣
+        // ║ ESC  ║q ║w ║e ║r ║t ║y ║u ║i ║o ║p ║   +/−   ║
+        // ╠══════╬══╬══╬══╬══╬══╬══╬══╬══╬══╬══╬══════════╣
+        // ║ TAB  ║a ║s ║d ║f ║g ║h ║j ║k ║l ║BSPC║  :/;  ║
+        // ╠══════╬══╬══╬══╬══╬══╬══╬══╬══╬══╬══╬══════════╣
+        // ║ CTRL ║z ║x ║c ║v ║b ║n ║m ║,/" ║./> ║/? ║ mo2 ║
+        // ╚══════╩══╩══╩══╦══╦══╬══╦══╦══╩══╩══╩══════════╝
+        //                 ║⌥ ║⌘ ║⇧║RET║SPC║mo1║
+        //                 ╚══╩══╩══╩══╩══╩══╝
 
         default_layer {
             bindings = <
-&kp ESC    &kp Q  &kp W  &kp E  &kp R  &kp T      &kp Y  &kp U  &kp I          &kp O      &kp P          &plus_minus
-&kp TAB    &kp A  &kp S  &kp D  &kp F  &kp G      &kp H  &kp J  &kp K          &kp L      &colon_semi    &kp BSPC
-&kp LCTRL  &kp Z  &kp X  &kp C  &kp V  &kp B      &kp N  &kp M  &comma_dquote  &dot_gt    &slash_qmark   &lt 2 RSHFT
+&kp ESC    &kp Q  &kp W  &kp E  &kp R  &kp T      &kp Y  &kp U  &kp I          &kp O    &kp P        &plus_minus
+&kp TAB    &kp A  &kp S  &kp D  &kp F  &kp G      &kp H  &kp J  &kp K          &kp L    &kp BSPC     &colon_semi
+&kp LCTRL  &kp Z  &kp X  &kp C  &kp V  &kp B      &kp N  &kp M  &comma_dquote  &dot_gt  &slash_qmark &mo 2
                   &kp LALT  &kp LGUI  &kp LSHFT      &kp RET  &kp SPACE  &mo 1
             >;
         };
 
-        // ╔═══════════════════════════════════════════════════════╗
-        // ║  CAPA 1 — símbolos y números              (hold mo1)  ║
-        // ╠══════╦══╦══╦══╦══╦══╬══╦══╦══╦══╦══╦═══════╣
-        // ║ ESC  ║@ ║# ║$ ║! ║| ║& ║[ ║⬆║( ║) ║   =   ║
-        // ╠══════╬══╬══╬══╬══╬══╬══╬══╬══╬══╬══╬═══════╣
-        // ║ TAB  ║0 ║1 ║2 ║3 ║4 ║{ ║⬅║⬇║➡║  ║ BSPC  ║
-        // ╠══════╬══╬══╬══╬══╬══╬══╬══╬══╬══╬══╬═══════╣
-        // ║ CTRL ║5 ║6 ║7 ║8 ║9 ║« ║_ ║🪟║* ║% ║ CAPS  ║
-        // ╚══════╩══╩══╩═══╦══╦══╬══╦══╦═══╩══╩══╩═══════╝
-        //                  ║⌥ ║⌘ ║⇧║RET║SPC║mo1║
-        //                  ╚══╩══╩══╩══╩══╩══╝
+        // ╔══════════════════════════════════════════════════════════╗
+        // ║  CAPA 1 — símbolos y números               (hold mo1)   ║
+        // ╠══════╦══╦══╦══╦══╦══╬══╦══╦══╦══╦══╦══════════╣
+        // ║ ESC  ║@ ║# ║$ ║! ║| ║& ║[ ║⬆ ║( ║) ║    =    ║
+        // ╠══════╬══╬══╬══╬══╬══╬══╬══╬══╬══╬══╬══════════╣
+        // ║ TAB  ║0 ║1 ║2 ║3 ║4 ║{ ║⬅ ║⬇ ║➡ ║BSPC║  BSPC ║
+        // ╠══════╬══╬══╬══╬══╬══╬══╬══╬══╬══╬══╬══════════╣
+        // ║ CTRL ║5 ║6 ║7 ║8 ║9 ║« ║_ ║🪟 ║* ║% ║  CAPS  ║
+        // ╚══════╩══╩══╩══╦══╦══╬══╦══╦══╩══╩══╩══════════╝
+        //                 ║⌥ ║⌘ ║⇧║RET║SPC║mo1║
+        //                 ╚══╩══╩══╩══╩══╩══╝
 
         symbols_layer {
             bindings = <
-&trans  &kp AT  &kp HASH  &kp DLLR  &kp EXCL  &kp PIPE      &kp AMPS      &kp LBKT   &kp UP    &kp LPAR   &kp RPAR  &kp EQUAL
-&trans  &kp N0  &kp N1    &kp N2    &kp N3    &kp N4        &kp LBRC      &kp LEFT   &kp DOWN  &kp RIGHT  &trans    &kp BSPC
-&trans  &kp N5  &kp N6    &kp N7    &kp N8    &kp N9        &kp LA(BSLH)  &kp UNDER  &kp F3    &kp ASTRK  &kp PRCNT &kp CAPS
+&trans  &kp AT  &kp HASH  &kp DLLR  &kp EXCL  &kp PIPE      &kp AMPS      &kp LBKT   &kp UP    &kp LPAR   &kp RPAR   &kp EQUAL
+&trans  &kp N0  &kp N1    &kp N2    &kp N3    &kp N4        &kp LBRC      &kp LEFT   &kp DOWN  &kp RIGHT  &kp BSPC   &kp BSPC
+&trans  &kp N5  &kp N6    &kp N7    &kp N8    &kp N9        &kp LA(BSLH)  &kp UNDER  &kp F3    &kp ASTRK  &kp PRCNT  &kp CAPS
                            &trans    &trans    &trans        &trans        &trans     &trans
             >;
         };
 
-        // ╔═══════════════════════════════════════════════════════╗
-        // ║  CAPA 2 — media                     (hold ⇧🌐 = lt2) ║
-        // ╠══════╦════╦════╦════╦════╦════╬══╦══╦══╦══╦══╦═══════╣
-        // ║      ║🌙  ║☀️  ║🔇  ║🔉  ║🔊  ║  ║  ║  ║  ║  ║       ║
-        // ╠══════╬════╬════╬════╬════╬════╬══╬══╬══╬══╬══╬═══════╣
-        // ║      ║    ║    ║    ║    ║    ║  ║  ║  ║  ║  ║       ║
-        // ╠══════╬════╬════╬════╬════╬════╬══╬══╬══╬══╬══╬═══════╣
-        // ║      ║    ║    ║    ║    ║    ║  ║  ║  ║  ║  ║       ║
-        // ╚══════╩════╩════╩════╦════╦════╬══╦══╦════╩══╩══╩═══════╝
-        //                      ║    ║    ║  ║  ║    ║
-        //                      ╚════╩════╩══╩══╩════╝
+        // ╔══════════════════════════════════════════════════════════╗
+        // ║  CAPA 2 — emoji/Globe               (hold mo2)          ║
+        // ╠══════╦══╦══╦══╦══╦══╬══╦══╦══╦══╦══╦══════════╣
+        // ║      ║  ║  ║  ║  ║  ║  ║  ║  ║  ║  ║          ║
+        // ╠══════╬══╬══╬══╬══╬══╬══╬══╬══╬══╬══╬══════════╣
+        // ║      ║  ║  ║  ║  ║  ║  ║  ║  ║  ║  ║          ║
+        // ╠══════╬══╬══╬══╬══╬══╬══╬══╬══╬══╬══╬══════════╣
+        // ║      ║  ║  ║  ║  ║  ║  ║  ║  ║  ║  ║          ║
+        // ╚══════╩══╩══╩══╦══╦══╬══╦══╦══╩══╩══╩══════════╝
+        //                 ║  ║  ║  ║  ║🌐 ║   ║
+        //                 ╚══╩══╩══╩══╩══╩══╝
 
-        media_layer {
+        globe_layer {
             bindings = <
-&trans  &kp C_BRI_DN  &kp C_BRI_UP  &kp C_MUTE  &kp C_VOL_DN  &kp C_VOL_UP      &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans        &trans        &trans       &trans        &trans            &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans        &trans        &trans       &trans        &trans            &trans  &trans  &trans  &trans  &trans  &trans
-                                    &trans       &trans        &trans            &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans  &trans  &trans  &trans
+                        &trans  &trans  &trans      &trans  &kp RSHFT  &trans
             >;
         };
 
