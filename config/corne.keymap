@@ -9,8 +9,8 @@
  *
  * COMBOS
  * ──────────────────────────────────────────────
- * D + F  (pos 9+10)   →  -  (MINUS)
- * J + K  (pos 25+26)  →  +  (PLUS)
+ * D + F  (pos 15+16)  →  -  (MINUS)
+ * J + K  (pos 19+20)  →  +  (PLUS)
  *
  * MOD-MORPH
  * ──────────────────────────────────────────────
@@ -46,13 +46,13 @@
 
         combo_minus {
             timeout-ms = <50>;
-            key-positions = <9 10>;   /* D + F */
+            key-positions = <15 16>;  /* D + F */
             bindings = <&kp MINUS>;
         };
 
         combo_plus {
             timeout-ms = <50>;
-            key-positions = <25 26>;  /* J + K */
+            key-positions = <19 20>;  /* J + K */
             bindings = <&kp PLUS>;
         };
 
@@ -125,11 +125,11 @@
         //                   ╚═══╩═══╩═══╝   ╚═══╩═══╩═══╝
 
         media_layer {
-            /* MO2: S=F1(bri-)  D=F2(bri+)  K=F15(vol-)  L=F16(vol+) */
-            /* F1/F2 activan brillo nativo en macOS — F15/F16 mapear en Karabiner */
+            /* MO2: S=F1(bri-)  D=F2(bri+)  K=F11(vol-)  L=F12(vol+) */
+            /* F1/F2 y F11/F12 son los atajos nativos de macOS para brillo y volumen */
             bindings = <
 &kp ESC  &trans  &trans     &trans     &trans  &trans      &trans  &trans  &trans      &trans      &trans  &trans
-&trans   &trans  &kp F1     &kp F2     &trans  &trans      &trans  &trans  &kp F15     &kp F16     &trans  &trans
+&trans   &trans  &kp F1     &kp F2     &trans  &trans      &trans  &trans  &kp F11     &kp F12     &trans  &trans
 &trans   &trans  &trans      &trans      &trans  &trans      &trans  &trans  &trans      &trans      &trans  &trans
                               &trans      &trans  &trans      &trans  &trans  &trans
             >;
