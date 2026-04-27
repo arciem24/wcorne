@@ -27,7 +27,6 @@
 
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
-#include <dt-bindings/zmk/consumer.h>
 
 / {
     behaviors {
@@ -62,24 +61,8 @@
     keymap {
         compatible = "zmk,keymap";
 
-        // ╔══════════════════════════════════════════════════════════════╗
-        // ║  CAPA 0 — escritura base                                     ║
-        // ╠═══════╦═══╦═══╦═══╦═══╦═══╬═══╦═══╦═══╦═══╦═══╦════════╣
-        // ║  TAB  ║ Q ║ W ║ E ║ R ║ T ║ Y ║ U ║ I ║ O ║ P ║  BSPC  ║
-        // ╠═══════╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬════════╣
-        // ║LSHIFT ║ A ║ S ║ D ║ F ║ G ║ H ║ J ║ K ║ L ║ ; ║  RET   ║
-        // ╠═══════╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬════════╣
-        // ║ CTRL  ║ Z ║ X ║ C ║ V ║ B ║ N ║ M ║ , ║ . ║ / ║  MO2   ║
-        // ╚═══════╩═══╩═══╩═╦═╩═╦═╩═╦═╩═══╩═╦═╩═╦═╩═╦═╩════════════╝
-        //                   ║MO1║ ⌥ ║ ⌘ ║   ║SPC║HYP║MO1║
-        //                   ╚═══╩═══╩═══╝   ╚═══╩═══╩═══╝
-        //
-        // Combos:  D+F → -      J+K → +
-        // Shift nativo:  . → >    / → ?    ; → :
-        // Mod-morph:     , shift → "
-
         default_layer {
-            bindings = <
+            bindings = 
 &kp TAB    &kp Q  &kp W  &kp E  &kp R  &kp T      &kp Y  &kp U  &kp I          &kp O    &kp P     &kp BSPC
 &kp LSHFT  &kp A  &kp S  &kp D  &kp F  &kp G      &kp H  &kp J  &kp K          &kp L    &kp SEMI  &kp RET
 &kp LCTRL  &kp Z  &kp X  &kp C  &kp V  &kp B      &kp N  &kp M  &comma_dquote  &kp DOT  &kp FSLH  &mo 2
@@ -87,24 +70,8 @@
             >;
         };
 
-        // ╔══════════════════════════════════════════════════════════════╗
-        // ║  CAPA 1 — símbolos y números                  (hold MO1)    ║
-        // ╠═══════╦═══╦═══╦═══╦═══╦═══╬═══╦═══╦═══╦═══╦═══╦════════╣
-        // ║       ║ @ ║ # ║ $ ║ ! ║ | ║ & ║ [ ║ = ║ ( ║ ) ║        ║
-        // ╠═══════╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬════════╣
-        // ║       ║ 0 ║ 1 ║ 2 ║ 3 ║ 4 ║ { ║ ← ║ ↓ ║ ↑ ║ → ║        ║
-        // ╠═══════╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬════════╣
-        // ║       ║ 5 ║ 6 ║ 7 ║ 8 ║ 9 ║ « ║ _ ║ ⊞ ║ * ║ % ║        ║
-        // ╚═══════╩═══╩═══╩═╦═╩═╦═╩═╦═╩═══╩═╦═╩═╦═╩═╦═╩════════════╝
-        //                   ║   ║   ║   ║   ║   ║   ║   ║
-        //                   ╚═══╩═══╩═══╝   ╚═══╩═══╩═══╝
-        //
-        // ;  en MO1  →  → (flecha derecha)
-        // «  = Option+\  (macOS US)
-        // ⊞  = F3  (Mission Control)
-
         symbols_layer {
-            bindings = <
+            bindings = 
 &trans  &kp AT  &kp HASH  &kp DLLR  &kp EXCL  &kp PIPE      &kp AMPS      &kp LBKT   &kp EQUAL  &kp LPAR   &kp RPAR   &trans
 &trans  &kp N0  &kp N1    &kp N2    &kp N3    &kp N4        &kp LBRC      &kp LEFT   &kp DOWN   &kp UP     &kp RIGHT  &trans
 &trans  &kp N5  &kp N6    &kp N7    &kp N8    &kp N9        &kp LA(BSLH)  &kp UNDER  &kp F3     &kp ASTRK  &kp PRCNT  &trans
@@ -112,21 +79,8 @@
             >;
         };
 
-        // ╔══════════════════════════════════════════════════════════════╗
-        // ║  CAPA 2 — media / sistema                     (hold MO2)    ║
-        // ╠═══════╦═══╦═══╦═══╦═══╦═══╬═══╦═══╦═══╦═══╦═══╦════════╣
-        // ║  ESC  ║   ║   ║   ║   ║   ║   ║   ║   ║   ║   ║        ║
-        // ╠═══════╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬════════╣
-        // ║       ║   ║bri║bri║   ║   ║   ║   ║vol║vol║   ║        ║
-        // ║       ║   ║ - ║ + ║   ║   ║   ║   ║ - ║ + ║   ║        ║
-        // ╠═══════╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬════════╣
-        // ║       ║   ║   ║   ║   ║   ║   ║   ║   ║   ║   ║        ║
-        // ╚═══════╩═══╩═══╩═╦═╩═╦═╩═╦═╩═══╩═╦═╩═╦═╩═╦═╩════════════╝
-        //                   ║   ║   ║   ║   ║   ║   ║   ║
-        //                   ╚═══╩═══╩═══╝   ╚═══╩═══╩═══╝
-
         media_layer {
-            bindings = <
+            bindings = 
 &kp ESC  &trans  &trans        &trans        &trans  &trans      &trans  &trans  &trans        &trans        &trans  &trans
 &trans   &trans  &kp C_BRI_DN  &kp C_BRI_UP  &trans  &trans      &trans  &trans  &kp C_VOL_DN  &kp C_VOL_UP  &trans  &trans
 &trans   &trans  &trans        &trans        &trans  &trans      &trans  &trans  &trans        &trans        &trans  &trans
