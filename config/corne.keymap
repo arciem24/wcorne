@@ -5,7 +5,7 @@
  * ──────────────────────────────────────────────
  * Capa 0  default_layer   escritura base
  * Capa 1  symbols_layer   MO1 — números y símbolos (hold MO1)
- * Capa 2  media_layer     MO2 — brillo, volumen, ESC (hold MO2)
+ * Capa 2  media_layer     MO2 — brillo, volumen (hold MO2)
  *
  * COMBOS
  * ──────────────────────────────────────────────
@@ -15,12 +15,17 @@
  * MOD-MORPH
  * ──────────────────────────────────────────────
  * ,   tap = ,    shift = "
- * (. / ; son nativos US: shift+. => > / shift+/ => ? / shift+; => :)
+ * (. / / son nativos US: shift+. => > / shift+/ => ?)
+ *
+ * HOLD-TAP
+ * ──────────────────────────────────────────────
+ * TAB      tap = TAB    hold = ESC
+ * :/;      tap = :      hold = RSHFT   (shift = ;)
  *
  * NOTAS
  * ──────────────────────────────────────────────
  * HYPER = Ctrl+Alt+Shift+Cmd  →  LS(LA(LC(LGUI)))
- * MO2 (meñique derecho): S=bri-  D=bri+  K=vol-  L=vol+  TAB=ESC
+ * MO2: A=F1(bri-)  S=F2(bri+)  D=F11(vol-)  F=F12(vol+)
  * «   = Option+\  (Alt+Backslash en macOS US)
  * ⊞   = F3        (Mission Control en macOS)
  */
@@ -37,6 +42,24 @@
             #binding-cells = <0>;
             bindings = <&kp COMMA>, <&kp DQT>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        tab_esc: tab_esc {
+            compatible = "zmk,behavior-hold-tap";
+            label = "TAB_ESC";
+            #binding-cells = <2>;
+            flavor = "hold-preferred";
+            tapping-term-ms = <200>;
+            bindings = <&kp>, <&kp>;
+        };
+
+        colon_rshft: colon_rshft {
+            compatible = "zmk,behavior-hold-tap";
+            label = "COLON_RSHFT";
+            #binding-cells = <2>;
+            flavor = "hold-preferred";
+            tapping-term-ms = <200>;
+            bindings = <&kp>, <&kp>;
         };
 
     };
@@ -64,74 +87,66 @@
         // ╔══════════════════════════════════════════════════════════════╗
         // ║  CAPA 0 — escritura base                                     ║
         // ╠═══════╦═══╦═══╦═══╦═══╦═══╬═══╦═══╦═══╦═══╦═══╦════════╣
-        // ║  TAB  ║ Q ║ W ║ E ║ R ║ T ║ Y ║ U ║ I ║ O ║ P ║  BSPC  ║
+        // ║TAB/ESC║ Q ║ W ║ E ║ R ║ T ║ Y ║ U ║ I ║ O ║ P ║  MO2   ║
         // ╠═══════╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬════════╣
-        // ║LSHIFT ║ A ║ S ║ D ║ F ║ G ║ H ║ J ║ K ║ L ║ ; ║  RET   ║
+        // ║LSHIFT ║ A ║ S ║ D ║ F ║ G ║ H ║ J ║ K ║ L ║ ⌫ ║  RET   ║
         // ╠═══════╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬════════╣
-        // ║ CTRL  ║ Z ║ X ║ C ║ V ║ B ║ N ║ M ║ , ║ . ║ / ║  MO2   ║
+        // ║ CTRL  ║ Z ║ X ║ C ║ V ║ B ║ N ║ M ║ , ║ . ║ / ║ :/RSFT ║
         // ╚═══════╩═══╩═══╩═╦═╩═╦═╩═╦═╩═══╩═╦═╩═╦═╩═╦═╩════════════╝
-        //                   ║MO1║ ⌥ ║ ⌘ ║   ║SPC║HYP║MO1║
+        //                   ║MO1║ ⌥ ║ ⌘ ║   ║HYP║SPC║MO1║
         //                   ╚═══╩═══╩═══╝   ╚═══╩═══╩═══╝
         //
-        // Combos:  D+F → -      J+K → +
-        // Shift nativo:  . → >    / → ?    ; → :
+        // Combos:      D+F → +      J+K → -
+        // Shift nativo:  . → >    / → ?
         // Mod-morph:     , shift → "
+        // Hold-tap:      TAB hold → ESC  /  : hold → RSHFT  (shift+: → ;)
 
         default_layer {
             bindings = <
-&kp TAB    &kp Q  &kp W  &kp E  &kp R  &kp T      &kp Y  &kp U  &kp I          &kp O    &kp P     &kp BSPC
-&kp LSHFT  &kp A  &kp S  &kp D  &kp F  &kp G      &kp H  &kp J  &kp K          &kp L    &kp SEMI  &kp RET
-&kp LCTRL  &kp Z  &kp X  &kp C  &kp V  &kp B      &kp N  &kp M  &comma_dquote  &kp DOT  &kp FSLH  &mo 2
-                   &mo 1  &kp LALT  &kp LGUI      &kp SPACE  &kp LS(LA(LC(LGUI)))  &mo 1
+&tab_esc ESC TAB  &kp Q  &kp W  &kp E  &kp R  &kp T      &kp Y  &kp U  &kp I          &kp O    &kp P     &mo 2
+&kp LSHFT         &kp A  &kp S  &kp D  &kp F  &kp G      &kp H  &kp J  &kp K          &kp L    &kp BSPC  &kp RET
+&kp LCTRL         &kp Z  &kp X  &kp C  &kp V  &kp B      &kp N  &kp M  &comma_dquote  &kp DOT  &kp FSLH  &colon_rshft RSHFT COLON
+                           &mo 1  &kp LALT  &kp LGUI      &kp LS(LA(LC(LGUI)))  &kp SPACE  &mo 1
             >;
         };
 
         // ╔══════════════════════════════════════════════════════════════╗
         // ║  CAPA 1 — símbolos y números                  (hold MO1)    ║
         // ╠═══════╦═══╦═══╦═══╦═══╦═══╬═══╦═══╦═══╦═══╦═══╦════════╣
-        // ║       ║ @ ║ # ║ $ ║ ! ║ | ║ & ║ [ ║ = ║ ( ║ ) ║        ║
+        // ║       ║ @ ║ # ║ $ ║ ! ║ | ║ & ║ [ ║ ↑ ║ ( ║ ) ║        ║
         // ╠═══════╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬════════╣
-        // ║       ║ 0 ║ 1 ║ 2 ║ 3 ║ 4 ║ { ║ ← ║ ↓ ║ ↑ ║ → ║        ║
+        // ║       ║ 0 ║ 1 ║ 2 ║ 3 ║ 4 ║ { ║ ← ║ ↓ ║ → ║   ║        ║
         // ╠═══════╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬════════╣
         // ║       ║ 5 ║ 6 ║ 7 ║ 8 ║ 9 ║ « ║ _ ║ ⊞ ║ * ║ % ║        ║
         // ╚═══════╩═══╩═══╩═╦═╩═╦═╩═╦═╩═══╩═╦═╩═╦═╩═╦═╩════════════╝
-        //                   ║   ║   ║   ║   ║   ║   ║   ║
-        //                   ╚═══╩═══╩═══╝   ╚═══╩═══╩═══╝
-        //
-        // ;  en MO1  →  → (flecha derecha)
-        // «  = Option+\  (macOS US)
-        // ⊞  = F3  (Mission Control)
 
         symbols_layer {
             bindings = <
-&trans  &kp AT  &kp HASH  &kp DLLR  &kp EXCL  &kp PIPE      &kp AMPS      &kp LBKT   &kp EQUAL  &kp LPAR   &kp RPAR   &trans
-&trans  &kp N0  &kp N1    &kp N2    &kp N3    &kp N4        &kp LBRC      &kp LEFT   &kp DOWN   &kp UP     &kp RIGHT  &trans
-&trans  &kp N5  &kp N6    &kp N7    &kp N8    &kp N9        &kp LA(BSLH)  &kp UNDER  &kp F3     &kp ASTRK  &kp PRCNT  &trans
-                            &trans    &trans    &trans        &trans        &trans     &trans
+&trans  &kp AT  &kp HASH  &kp DLLR  &kp EXCL  &kp PIPE      &kp AMPS      &kp LBKT  &kp UP    &kp LPAR   &kp RPAR   &trans
+&trans  &kp N0  &kp N1    &kp N2    &kp N3    &kp N4        &kp LBRC      &kp LEFT  &kp DOWN  &kp RIGHT  &trans     &trans
+&trans  &kp N5  &kp N6    &kp N7    &kp N8    &kp N9        &kp LA(BSLH)  &kp UNDER &kp F3    &kp ASTRK  &kp PRCNT  &trans
+                             &trans  &trans    &trans        &trans        &trans    &trans
             >;
         };
 
         // ╔══════════════════════════════════════════════════════════════╗
         // ║  CAPA 2 — media / sistema                     (hold MO2)    ║
         // ╠═══════╦═══╦═══╦═══╦═══╦═══╬═══╦═══╦═══╦═══╦═══╦════════╣
-        // ║  ESC  ║   ║   ║   ║   ║   ║   ║   ║   ║   ║   ║        ║
+        // ║       ║   ║   ║   ║   ║   ║   ║   ║   ║   ║   ║        ║
         // ╠═══════╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬════════╣
-        // ║       ║   ║bri║bri║   ║   ║   ║   ║vol║vol║   ║        ║
-        // ║       ║   ║ - ║ + ║   ║   ║   ║   ║ - ║ + ║   ║        ║
+        // ║       ║bri║bri║vol║vol║   ║   ║   ║   ║   ║   ║        ║
+        // ║       ║ - ║ + ║ - ║ + ║   ║   ║   ║   ║   ║   ║        ║
         // ╠═══════╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬════════╣
         // ║       ║   ║   ║   ║   ║   ║   ║   ║   ║   ║   ║        ║
         // ╚═══════╩═══╩═══╩═╦═╩═╦═╩═╦═╩═══╩═╦═╩═╦═╩═╦═╩════════════╝
-        //                   ║   ║   ║   ║   ║   ║   ║   ║
-        //                   ╚═══╩═══╩═══╝   ╚═══╩═══╩═══╝
 
         media_layer {
-            /* MO2: S=F1(bri-)  D=F2(bri+)  K=F11(vol-)  L=F12(vol+) */
-            /* F1/F2 y F11/F12 son los atajos nativos de macOS para brillo y volumen */
+            /* A=F1(bri-)  S=F2(bri+)  D=F11(vol-)  F=F12(vol+) */
             bindings = <
-&kp ESC  &trans  &trans     &trans     &trans  &trans      &trans  &trans  &trans      &trans      &trans  &trans
-&trans   &trans  &kp F1     &kp F2     &trans  &trans      &trans  &trans  &kp F11     &kp F12     &trans  &trans
-&trans   &trans  &trans      &trans      &trans  &trans      &trans  &trans  &trans      &trans      &trans  &trans
-                              &trans      &trans  &trans      &trans  &trans  &trans
+&trans  &trans   &trans   &trans    &trans    &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &kp F1   &kp F2   &kp F11   &kp F12   &trans      &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans   &trans   &trans    &trans    &trans      &trans  &trans  &trans  &trans  &trans  &trans
+                           &trans    &trans    &trans      &trans  &trans  &trans
             >;
         };
 
