@@ -4,13 +4,13 @@
  * CAPAS
  * ──────────────────────────────────────────────
  * Capa 0  default_layer   escritura base
- * Capa 1  symbols_layer   MO1 — números y símbolos (hold MO1)
- * Capa 2  media_layer     MO2 — brillo, volumen (hold MO2)
+ * Capa 1  symbols_layer   MO1 — números y símbolos (toggle TG1)
+ * Capa 2  media_layer     MO2 — brillo, volumen, símbolos cierre (hold MO2)
  *
  * COMBOS
  * ──────────────────────────────────────────────
- * D + F  (pos 15+16)  →  +  (PLUS)
- * J + K  (pos 19+20)  →  -  (MINUS)
+ * D + F  (pos 15+16)  →  -  (MINUS)
+ * J + K  (pos 19+20)  →  +  (PLUS)
  *
  * MOD-MORPH
  * ──────────────────────────────────────────────
@@ -21,13 +21,14 @@
  * ──────────────────────────────────────────────
  * SHIFT    tap = ESC    hold = LSHFT
  * :/;      tap = :      hold = RSHFT   (shift = ;)
- * SPC×2    tap = SPC    hold = HYPER   (ambos thumbs derechos)
  *
  * NOTAS
  * ──────────────────────────────────────────────
  * HYPER = Ctrl+Alt+Shift+Cmd  →  LS(LA(LC(LGUI)))
  * MO2: A=F1(bri-)  S=F2(bri+)  D=F11(vol-)  F=F12(vol+)
+ *      H=}  U=]  O=)  N=»
  * «   = Option+\  (Alt+Backslash en macOS US)
+ * »   = Option+Shift+\  (macOS US)
  * ⊞   = F3        (Mission Control en macOS)
  */
 
@@ -63,15 +64,6 @@
             bindings = <&kp>, <&kp>;
         };
 
-        spc_hyp: spc_hyp {
-            compatible = "zmk,behavior-hold-tap";
-            label = "SPC_HYP";
-            #binding-cells = <2>;
-            flavor = "tap-preferred";
-            tapping-term-ms = <150>;
-            bindings = <&kp>, <&kp>;
-        };
-
     };
 
     combos {
@@ -97,33 +89,34 @@
         // ╔══════════════════════════════════════════════════════════════╗
         // ║  CAPA 0 — escritura base                                     ║
         // ╠═══════╦═══╦═══╦═══╦═══╦═══╬═══╦═══╦═══╦═══╦═══╦════════╣
-        // ║TAB/ESC║ Q ║ W ║ E ║ R ║ T ║ Y ║ U ║ I ║ O ║ P ║  MO2   ║
+        // ║SFT/ESC║ Q ║ W ║ E ║ R ║ T ║ Y ║ U ║ I ║ O ║ P ║  MO2   ║
         // ╠═══════╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬════════╣
-        // ║LSHIFT ║ A ║ S ║ D ║ F ║ G ║ H ║ J ║ K ║ L ║ ⌫ ║  RET   ║
+        // ║  TAB  ║ A ║ S ║ D ║ F ║ G ║ H ║ J ║ K ║ L ║ ⌫ ║  RET   ║
         // ╠═══════╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬════════╣
         // ║ CTRL  ║ Z ║ X ║ C ║ V ║ B ║ N ║ M ║ , ║ . ║ / ║ :/RSFT ║
         // ╚═══════╩═══╩═══╩═╦═╩═╦═╩═╦═╩═══╩═╦═╩═╦═╩═╦═╩════════════╝
-        //                   ║MO1║ ⌥ ║ ⌘ ║   ║HYP║SPC║MO1║
+        //                   ║TG1║ ⌥ ║ ⌘ ║   ║HYP║SPC║MO1║
         //                   ╚═══╩═══╩═══╝   ╚═══╩═══╩═══╝
         //
-        // Combos:      D+F → +      J+K → -
+        // Combos:      D+F → -      J+K → +
         // Shift nativo:  . → >    / → ?
         // Mod-morph:     , shift → "
-        // Hold-tap:      TAB hold → ESC  /  : hold → RSHFT  (shift+: → ;)
+        // Hold-tap:      SHIFT hold → LSHFT  tap → ESC
+        //                : hold → RSHFT  (shift+: → ;)
 
         default_layer {
             bindings = <
-&shft_esc LSHFT ESC   &kp Q  &kp W  &kp E  &kp R  &kp T      &kp Y  &kp U  &kp I          &kp O    &kp P     &mo 2
-&kp TAB               &kp A  &kp S  &kp D  &kp F  &kp G      &kp H  &kp J  &kp K          &kp L    &kp BSPC  &kp RET
-&kp LCTRL         &kp Z  &kp X  &kp C  &kp V  &kp B      &kp N  &kp M  &comma_dquote  &kp DOT  &kp FSLH  &colon_rshft RSHFT COLON
-                           &tog 1  &kp LALT  &kp LGUI      &kp LS(LA(LC(LGUI)))  &kp SPACE  &mo 1
+&shft_esc LSHFT ESC  &kp Q  &kp W  &kp E  &kp R  &kp T      &kp Y  &kp U  &kp I          &kp O    &kp P     &mo 2
+&kp TAB              &kp A  &kp S  &kp D  &kp F  &kp G      &kp H  &kp J  &kp K          &kp L    &kp BSPC  &kp RET
+&kp LCTRL            &kp Z  &kp X  &kp C  &kp V  &kp B      &kp N  &kp M  &comma_dquote  &kp DOT  &kp FSLH  &colon_rshft RSHFT COLON
+                              &tog 1  &kp LALT  &kp LGUI      &kp LS(LA(LC(LGUI)))  &kp SPACE  &mo 1
             >;
         };
 
         // ╔══════════════════════════════════════════════════════════════╗
-        // ║  CAPA 1 — símbolos y números                  (hold MO1)    ║
+        // ║  CAPA 1 — símbolos y números                  (toggle TG1)  ║
         // ╠═══════╦═══╦═══╦═══╦═══╦═══╬═══╦═══╦═══╦═══╦═══╦════════╣
-        // ║       ║ @ ║ # ║ $ ║ ! ║ | ║ & ║ [ ║ ↑ ║ ( ║ ) ║        ║
+        // ║       ║ @ ║ # ║ $ ║ ! ║ | ║ & ║ [ ║ ↑ ║ ( ║ = ║        ║
         // ╠═══════╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬════════╣
         // ║       ║ 0 ║ 1 ║ 2 ║ 3 ║ 4 ║ { ║ ← ║ ↓ ║ → ║   ║        ║
         // ╠═══════╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬════════╣
@@ -132,33 +125,34 @@
 
         symbols_layer {
             bindings = <
-&trans  &kp AT  &kp HASH  &kp DLLR  &kp EXCL  &kp PIPE      &kp AMPS      &kp LBKT  &kp UP    &kp LPAR   &kp EQUAL  &trans
-&trans  &kp N0  &kp N1    &kp N2    &kp N3    &kp N4        &kp LBRC      &kp LEFT  &kp DOWN  &kp RIGHT  &trans     &trans
-&trans  &kp N5  &kp N6    &kp N7    &kp N8    &kp N9        &kp LA(BSLH)  &kp UNDER &kp F3    &kp ASTRK  &kp PRCNT  &trans
-                             &trans  &trans    &trans        &trans        &trans    &trans
+&trans  &kp AT  &kp HASH  &kp DLLR  &kp EXCL  &kp PIPE      &kp AMPS      &kp LBKT   &kp UP    &kp LPAR   &kp EQUAL  &trans
+&trans  &kp N0  &kp N1    &kp N2    &kp N3    &kp N4        &kp LBRC      &kp LEFT   &kp DOWN  &kp RIGHT  &trans     &trans
+&trans  &kp N5  &kp N6    &kp N7    &kp N8    &kp N9        &kp LA(BSLH)  &kp UNDER  &kp F3    &kp ASTRK  &kp PRCNT  &trans
+                              &trans  &trans    &trans        &trans        &trans     &trans
             >;
         };
 
         // ╔══════════════════════════════════════════════════════════════╗
         // ║  CAPA 2 — media / sistema                     (hold MO2)    ║
         // ╠═══════╦═══╦═══╦═══╦═══╦═══╬═══╦═══╦═══╦═══╦═══╦════════╣
-        // ║       ║   ║   ║   ║   ║   ║   ║   ║   ║   ║   ║        ║
+        // ║       ║   ║   ║   ║   ║   ║   ║ ] ║   ║ ) ║   ║        ║
         // ╠═══════╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬════════╣
-        // ║       ║bri║bri║vol║vol║   ║   ║   ║   ║   ║   ║        ║
+        // ║       ║bri║bri║vol║vol║   ║ } ║   ║   ║   ║   ║        ║
         // ║       ║ - ║ + ║ - ║ + ║   ║   ║   ║   ║   ║   ║        ║
         // ╠═══════╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬════════╣
-        // ║       ║   ║   ║   ║   ║   ║   ║   ║   ║   ║   ║        ║
+        // ║       ║   ║   ║   ║   ║   ║ » ║   ║   ║   ║   ║        ║
         // ╚═══════╩═══╩═══╩═╦═╩═╦═╩═╦═╩═══╩═╦═╩═╦═╩═╦═╩════════════╝
 
         media_layer {
             /* A=F1(bri-)  S=F2(bri+)  D=F11(vol-)  F=F12(vol+) */
+            /* H=}  U=]  O=)  N=» */
             bindings = <
-&trans  &trans   &trans   &trans    &trans    &trans      &trans  &kp RBKT  &trans    &kp RPAR  &trans  &trans
-&trans  &kp F1   &kp F2   &kp F11   &kp F12   &trans      &kp RBRC  &trans  &trans  &trans  &trans  &trans
-&trans  &trans   &trans   &trans    &trans    &trans      &trans  &trans  &trans  &trans  &trans  &trans
-                           &trans    &trans    &trans      &trans  &trans  &trans
+&trans  &trans   &trans   &trans    &trans    &trans      &trans    &kp RBKT  &trans  &kp RPAR  &trans  &trans
+&trans  &kp F1   &kp F2   &kp F11   &kp F12   &trans      &kp RBRC  &trans    &trans  &trans    &trans  &trans
+&trans  &trans   &trans   &trans    &trans    &trans      &kp LS(LA(BSLH))  &trans  &trans  &trans  &trans  &trans
+                              &trans  &trans    &trans      &trans    &trans    &trans
             >;
         };
 
     };
-}; 
+};
