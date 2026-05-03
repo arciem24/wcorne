@@ -1,3 +1,4 @@
+```c
 /*
  * wcorne.keymap — Roberto Mattos 2026
  *
@@ -5,12 +6,15 @@
  * ──────────────────────────────────────────────
  * Capa 0  default_layer   escritura base
  * Capa 1  symbols_layer   MO1 — números y símbolos (toggle TG1)
- * Capa 2  media_layer     MO2 — brillo, volumen, símbolos cierre (hold MO2)
+ * Capa 2  media_layer     MO2 — media, vocales con tilde (hold MO2)
  *
  * COMBOS
  * ──────────────────────────────────────────────
  * D + F  (pos 15+16)  →  -  (MINUS)
  * J + K  (pos 19+20)  →  +  (PLUS)
+ * Q + W  (pos  1+ 2)  →  ⌘Z (CMD+Z / deshacer)
+ * M + ,  (pos 31+32)  →  ⌫  (BSPC)
+ * C + V  (pos 27+28)  →  ↵  (ENTER)
  *
  * MOD-MORPH
  * ──────────────────────────────────────────────
@@ -25,8 +29,9 @@
  * NOTAS
  * ──────────────────────────────────────────────
  * HYPER = Ctrl+Alt+Shift+Cmd  →  LS(LA(LC(LGUI)))
- * MO2: A=F1(bri-)  S=F2(bri+)  D=F11(vol-)  F=F12(vol+)
- *      H=}  U=]  O=)  N=»
+ * MO2: A=á  E=é  I=í  O=ó  U=ú
+ *      Z=F1(bri-)  X=F2(bri+)  C=F11(vol-)  V=F12(vol+)
+ *      H=}  N=»
  * «   = Option+\  (Alt+Backslash en macOS US)
  * »   = Option+Shift+\  (macOS US)
  * ⊞   = F3        (Mission Control en macOS)
@@ -66,6 +71,50 @@
 
     };
 
+    macros {
+
+        a_acute: a_acute {
+            compatible = "zmk,behavior-macro";
+            label = "A_ACUTE";
+            #binding-cells = <0>;
+            wait-ms = <20>;
+            bindings = <&kp LA(E)>, <&kp A>;
+        };
+
+        e_acute: e_acute {
+            compatible = "zmk,behavior-macro";
+            label = "E_ACUTE";
+            #binding-cells = <0>;
+            wait-ms = <20>;
+            bindings = <&kp LA(E)>, <&kp E>;
+        };
+
+        i_acute: i_acute {
+            compatible = "zmk,behavior-macro";
+            label = "I_ACUTE";
+            #binding-cells = <0>;
+            wait-ms = <20>;
+            bindings = <&kp LA(E)>, <&kp I>;
+        };
+
+        o_acute: o_acute {
+            compatible = "zmk,behavior-macro";
+            label = "O_ACUTE";
+            #binding-cells = <0>;
+            wait-ms = <20>;
+            bindings = <&kp LA(E)>, <&kp O>;
+        };
+
+        u_acute: u_acute {
+            compatible = "zmk,behavior-macro";
+            label = "U_ACUTE";
+            #binding-cells = <0>;
+            wait-ms = <20>;
+            bindings = <&kp LA(E)>, <&kp U>;
+        };
+
+    };
+
     combos {
         compatible = "zmk,combos";
 
@@ -81,6 +130,24 @@
             bindings = <&kp PLUS>;
         };
 
+        combo_undo {
+            timeout-ms = <50>;
+            key-positions = <1 2>;    /* Q + W */
+            bindings = <&kp LG(Z)>;
+        };
+
+        combo_bspc {
+            timeout-ms = <50>;
+            key-positions = <31 32>;  /* M + , */
+            bindings = <&kp BSPC>;
+        };
+
+        combo_enter {
+            timeout-ms = <50>;
+            key-positions = <27 28>;  /* C + V */
+            bindings = <&kp RET>;
+        };
+
     };
 
     keymap {
@@ -89,16 +156,17 @@
         // ╔══════════════════════════════════════════════════════════════╗
         // ║  CAPA 0 — escritura base                                     ║
         // ╠═══════╦═══╦═══╦═══╦═══╦═══╬═══╦═══╦═══╦═══╦═══╦════════╣
-        // ║SFT/ESC║ Q ║ W ║ E ║ R ║ T ║ Y ║ U ║ I ║ O ║ P ║  MO2   ║
+        // ║SFT/ESC║ Q ║ W ║ E ║ R ║ T ║ Y ║ U ║ I ║ O ║ P ║  TG1   ║
         // ╠═══════╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬════════╣
         // ║  TAB  ║ A ║ S ║ D ║ F ║ G ║ H ║ J ║ K ║ L ║ ⌫ ║  RET   ║
         // ╠═══════╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬════════╣
         // ║ CTRL  ║ Z ║ X ║ C ║ V ║ B ║ N ║ M ║ , ║ . ║ / ║ :/RSFT ║
         // ╚═══════╩═══╩═══╩═╦═╩═╦═╩═╦═╩═══╩═╦═╩═╦═╩═╦═╩════════════╝
-        //                   ║TG1║ ⌥ ║ ⌘ ║   ║HYP║SPC║MO1║
+        //                   ║MO2║ ⌥ ║ ⌘ ║   ║HYP║SPC║MO1║
         //                   ╚═══╩═══╩═══╝   ╚═══╩═══╩═══╝
         //
         // Combos:      D+F → -      J+K → +
+        //              Q+W → ⌘Z     M+, → ⌫     C+V → ↵
         // Shift nativo:  . → >    / → ?
         // Mod-morph:     , shift → "
         // Hold-tap:      SHIFT hold → LSHFT  tap → ESC
@@ -106,10 +174,10 @@
 
         default_layer {
             bindings = <
-&shft_esc LSHFT ESC  &kp Q  &kp W  &kp E  &kp R  &kp T      &kp Y  &kp U  &kp I          &kp O    &kp P     &mo 2
+&shft_esc LSHFT ESC  &kp Q  &kp W  &kp E  &kp R  &kp T      &kp Y  &kp U  &kp I          &kp O    &kp P     &tog 1
 &kp TAB              &kp A  &kp S  &kp D  &kp F  &kp G      &kp H  &kp J  &kp K          &kp L    &kp BSPC  &kp RET
 &kp LCTRL            &kp Z  &kp X  &kp C  &kp V  &kp B      &kp N  &kp M  &comma_dquote  &kp DOT  &kp FSLH  &colon_rshft RSHFT COLON
-                              &tog 1  &kp LALT  &kp LGUI      &kp LS(LA(LC(LGUI)))  &kp SPACE  &mo 1
+                              &mo 2  &kp LALT  &kp LGUI      &kp LS(LA(LC(LGUI)))  &kp SPACE  &mo 1
             >;
         };
 
@@ -133,26 +201,28 @@
         };
 
         // ╔══════════════════════════════════════════════════════════════╗
-        // ║  CAPA 2 — media / sistema                     (hold MO2)    ║
+        // ║  CAPA 2 — media / vocales con tilde           (hold MO2)    ║
         // ╠═══════╦═══╦═══╦═══╦═══╦═══╬═══╦═══╦═══╦═══╦═══╦════════╣
-        // ║       ║   ║   ║   ║   ║   ║   ║ ] ║   ║ ) ║   ║        ║
+        // ║       ║   ║   ║ é ║   ║   ║   ║ ú ║ í ║ ó ║   ║        ║
         // ╠═══════╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬════════╣
-        // ║       ║bri║bri║vol║vol║   ║ } ║   ║   ║   ║   ║        ║
+        // ║       ║ á ║   ║   ║   ║   ║ } ║   ║   ║   ║   ║        ║
+        // ╠═══════╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬════════╣
+        // ║       ║bri║bri║vol║vol║   ║ » ║   ║   ║   ║   ║        ║
         // ║       ║ - ║ + ║ - ║ + ║   ║   ║   ║   ║   ║   ║        ║
-        // ╠═══════╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬════════╣
-        // ║       ║   ║   ║   ║   ║   ║ » ║   ║   ║   ║   ║        ║
         // ╚═══════╩═══╩═══╩═╦═╩═╦═╩═╦═╩═══╩═╦═╩═╦═╩═╦═╩════════════╝
 
         media_layer {
-            /* A=F1(bri-)  S=F2(bri+)  D=F11(vol-)  F=F12(vol+) */
-            /* H=}  U=]  O=)  N=» */
+            /* A=á  E=é  I=í  O=ó  U=ú */
+            /* Z=F1(bri-)  X=F2(bri+)  C=F11(vol-)  V=F12(vol+) */
+            /* H=}  N=» */
             bindings = <
-&trans  &trans   &trans   &trans    &trans    &trans      &trans    &kp RBKT  &trans  &kp RPAR  &trans  &trans
-&trans  &kp F1   &kp F2   &kp F11   &kp F12   &trans      &kp RBRC  &trans    &trans  &trans    &trans  &trans
-&trans  &trans   &trans   &trans    &trans    &trans      &kp LS(LA(BSLH))  &trans  &trans  &trans  &trans  &trans
+&trans  &trans     &trans   &e_acute  &trans    &trans      &trans    &u_acute  &i_acute  &o_acute  &trans  &trans
+&trans  &a_acute   &trans   &trans    &trans    &trans      &kp RBRC  &trans    &trans    &trans    &trans  &trans
+&trans  &kp F1     &kp F2   &kp F11   &kp F12   &trans      &kp LS(LA(BSLH))  &trans  &trans  &trans  &trans  &trans
                               &trans  &trans    &trans      &trans    &trans    &trans
             >;
         };
 
     };
 };
+```
