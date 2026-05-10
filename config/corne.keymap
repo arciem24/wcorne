@@ -1,13 +1,16 @@
+Línea 86, columna 11. Voy a contar exactamente qué hay ahí:El problema está claro: los comentarios con caracteres Unicode (══, ┌, │, ⇧, ⌫, etc.) rompen el parser DTS. Hay que reescribir el archivo **sin ningún carácter especial** en los comentarios.Limpio — solo ASCII puro, sin un solo carácter Unicode. Copiá esto para GitHub:
+
+```
 /*
  * CAPAS:
  * Capa 0  default_layer   escritura base
- * Capa 1  nav_layer       MO1 - navegacion y numeros (azul en HTML)
- * Capa 2  sym_layer       MO2 - simbolos (ambar en HTML)
+ * Capa 1  nav_layer       MO1 - navegacion y numeros
+ * Capa 2  sym_layer       MO2 - simbolos
  *
  * COMBOS:
- *   D+F  (15+16) -> -  (guion)
- *   J+K  (19+20) -> +
- *   Q+W  ( 1+ 2) -> CMD+Z
+ *   D+F  (15+16) -> MINUS
+ *   J+K  (19+20) -> PLUS
+ *   Q+W  ( 1+ 2) -> LG(Z)
  */
 
 #include <behaviors.dtsi>
@@ -34,7 +37,7 @@
             bindings = <&kp>, <&kp>;
         };
 
-        /* Tap = :  |  Shift+Tap = ; */
+        /* Tap = :  |  Shift = ; */
         colon_semi: colon_semi {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
@@ -42,7 +45,7 @@
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
 
-        /* Tap = ,  |  Shift+Tap = " */
+        /* Tap = ,  |  Shift = " */
         comma_dquote: comma_dquote {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
@@ -55,21 +58,18 @@
     combos {
         compatible = "zmk,combos";
 
-        /* D+F -> - */
         combo_minus {
             timeout-ms = <50>;
             key-positions = <15 16>;
             bindings = <&kp MINUS>;
         };
 
-        /* J+K -> + */
         combo_plus {
             timeout-ms = <50>;
             key-positions = <19 20>;
             bindings = <&kp PLUS>;
         };
 
-        /* Q+W -> CMD+Z */
         combo_undo {
             timeout-ms = <50>;
             key-positions = <1 2>;
@@ -82,7 +82,7 @@
         compatible = "zmk,keymap";
 
         default_layer {
-            bindings = 
+            bindings = <
 &shft_esc LSFT ESC   &kp Q  &kp W  &kp E  &kp R  &kp T      &kp Y  &kp U  &kp I          &kp O    &kp P     &colon_semi
 &tab_shft LSFT TAB   &kp A  &kp S  &kp D  &kp F  &kp G      &kp H  &kp J  &kp K          &kp L    &kp BSPC  &kp RSHFT
 &kp LCTRL            &kp Z  &kp X  &kp C  &kp V  &kp B      &kp N  &kp M  &comma_dquote  &kp DOT  &kp FSLH  &kp RET
@@ -91,7 +91,7 @@
         };
 
         nav_layer {
-            bindings = 
+            bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans    &kp UP    &trans     &trans  &trans
 &trans  &kp N0  &kp N1  &kp N2  &kp N3  &kp N4      &trans  &kp LEFT  &kp DOWN  &kp RIGHT  &trans  &trans
 &trans  &kp N5  &kp N6  &kp N7  &kp N8  &kp N9      &trans  &trans    &trans    &trans     &trans  &trans
@@ -100,7 +100,7 @@
         };
 
         sym_layer {
-            bindings = 
+            bindings = <
 &trans  &kp EXCL    &kp AT    &kp HASH   &kp RPAR   &kp PIPE       &kp AMPS   &kp RBKT   &kp EQUAL  &kp QMARK  &kp PRCNT  &trans
 &trans  &kp LA(N1)  &kp ASTRK &kp MINUS  &kp LPAR   &trans         &trans     &kp LBKT   &kp PLUS   &kp LA(Z)  &trans     &trans
 &trans  &kp F1      &kp F2    &kp F11    &kp F12    &kp TILDE      &kp DLLR   &kp UNDER  &trans     &trans     &kp BSLH   &trans
@@ -110,3 +110,4 @@
 
     };
 };
+```
