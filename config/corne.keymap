@@ -1,6 +1,3 @@
-Línea 86, columna 11. Voy a contar exactamente qué hay ahí:El problema está claro: los comentarios con caracteres Unicode (══, ┌, │, ⇧, ⌫, etc.) rompen el parser DTS. Hay que reescribir el archivo **sin ningún carácter especial** en los comentarios.Limpio — solo ASCII puro, sin un solo carácter Unicode. Copiá esto para GitHub:
-
-```
 /*
  * CAPAS:
  * Capa 0  default_layer   escritura base
