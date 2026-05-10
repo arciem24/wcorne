@@ -1,3 +1,6 @@
+Sigue fallando en línea 100, columna 11. El problema no es `LSHFT` vs `LSFT` — es que `mod-morph` no acepta `&kp COLON` porque `COLON` no es un keycode válido en ZMK. `COLON` = `SEMI` con shift implícito en US layout. Hay que reescribir `colon_semi` usando `SEMI` y `LS(SEMI)`:Y lo mismo para `comma_dquote` — `DQT` tampoco existe, es `LS(SQT)`:Código actualizado para copiar:
+
+```c
 /*
  * CAPAS:
  * Capa 0  default_layer   escritura base
@@ -16,7 +19,7 @@
 / {
     behaviors {
 
-        /* Tap = ESC  |  Hold = LSHFT */
+        /* Tap = ESC  |  Hold = LSFT */
         shft_esc: shft_esc {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -25,7 +28,7 @@
             bindings = <&kp>, <&kp>;
         };
 
-        /* Tap = TAB  |  Hold = LSHFT */
+        /* Tap = TAB  |  Hold = LSFT */
         tab_shft: tab_shft {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -38,7 +41,7 @@
         colon_semi: colon_semi {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp COLON>, <&kp SEMI>;
+            bindings = <&kp LS(SEMI)>, <&kp SEMI>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
 
@@ -46,7 +49,7 @@
         comma_dquote: comma_dquote {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp COMMA>, <&kp DQT>;
+            bindings = <&kp COMMA>, <&kp LS(SQT)>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
 
@@ -96,7 +99,7 @@
          *                    └────┴────┴────┘ └──────┴────┴────┘
          * ══════════════════════════════════════════════════════════ */
         default_layer {
-            bindings = 
+            bindings = <
 &shft_esc LSFT ESC   &kp Q  &kp W  &kp E  &kp R  &kp T      &kp Y  &kp U  &kp I          &kp O    &kp P     &colon_semi
 &tab_shft LSFT TAB   &kp A  &kp S  &kp D  &kp F  &kp G      &kp H  &kp J  &kp K          &kp L    &kp BSPC  &kp RSHFT
 &kp LCTRL            &kp Z  &kp X  &kp C  &kp V  &kp B      &kp N  &kp M  &comma_dquote  &kp DOT  &kp FSLH  &kp RET
@@ -112,7 +115,7 @@
          *  Resto: transparente
          * ══════════════════════════════════════════════════════════ */
         nav_layer {
-            bindings = 
+            bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans    &kp UP    &trans     &trans  &trans
 &trans  &kp N0  &kp N1  &kp N2  &kp N3  &kp N4      &trans  &kp LEFT  &kp DOWN  &kp RIGHT  &trans  &trans
 &trans  &kp N5  &kp N6  &kp N7  &kp N8  &kp N9      &trans  &trans    &trans    &trans     &trans  &trans
@@ -131,7 +134,7 @@
          *  ¡: LA(N1) via Karabiner / ¿: LA(Z) via Karabiner
          * ══════════════════════════════════════════════════════════ */
         sym_layer {
-            bindings = 
+            bindings = <
 &trans  &kp EXCL    &kp AT    &kp HASH   &kp RPAR   &kp PIPE       &kp AMPS   &kp RBKT   &kp EQUAL  &kp QMARK  &kp PRCNT  &trans
 &trans  &kp LA(N1)  &kp ASTRK &kp MINUS  &kp LPAR   &trans         &trans     &kp LBKT   &kp PLUS   &kp LA(Z)  &trans     &trans
 &trans  &kp F1      &kp F2    &kp F11    &kp F12    &kp TILDE      &kp DLLR   &kp UNDER  &trans     &trans     &kp BSLH   &trans
@@ -141,3 +144,4 @@
 
     };
 };
+```
