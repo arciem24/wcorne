@@ -1,65 +1,29 @@
-Tenés razón, me disculpo. Déjame leer el keymap original que funcionaba (el del trash) para ver qué diferencia hay:El original funcionaba con Unicode en los comentarios y con los mismos `#include`. Lo que cambió es que agregamos el bloque `macros { }` — eso es lo nuevo. Y hay dos cosas que pueden romperlo en ZMK Zephyr 3.5:
+/*
+ * CAPAS:
+ * Capa 0  default_layer   escritura base
+ * Capa 1  nav_layer       MO1 — navegación y números (azul en HTML)
+ * Capa 2  sym_layer       MO2 — símbolos y vocales con tilde (ámbar en HTML)
+ *
+ * COMBOS:
+ *   D+F  (15+16) → −  (guión)
+ *   J+K  (19+20) → +
+ *   Q+W  ( 1+ 2) → ⌘Z
+ *   M+,  (31+32) → ⌫ BSPC
+ *   C+V  (27+28) → ↵ RET
+ *
+ * VOCALES CON TILDE — integración ZMK + Karabiner:
+ *   ZMK envía LA(vocal/n) → Karabiner intercepta y produce á/é/í/ó/ú/ñ
+ *   No se necesitan macros en ZMK. Regla activa en karabiner.json.
+ *   Reglas ¿/¡ pendientes: LA(Z)→¿  LA(N1)→¡
+ */
 
-1. `label` está deprecado en Zephyr 3.5+ y puede causar errores fatales
-2. El bloque `macros { }` separado no existe en versiones anteriores de ZMK — hay que meter las macros dentro de `behaviors { }`
-
-Reescribo con las macros dentro de `behaviors` y sin `label`:You've hit your limit · resets 8:10pm (America/Buenos_Aires)<thinking>
-The user modified the keymap file significantly. Looking at the changes, they've completely redesigned the keymap:
-
-1. Removed macros entirely - replaced with a Karabiner approach where ZMK sends `LA(vocal)` and Karabiner intercepts and produces the accented vowel
-2. Changed the layer structure:
-   - Capa 0: default (modified - TG1 removed from top right, colon_rshft moved there, RET moved to bottom right, RSHFT on middle right)
-   - Capa 1: nav_layer (MO1) - navigation and numbers
-   - Capa 2: sym_layer (MO2) - symbols and accented vowels via Karabiner
-3. No macros block at all - clean code
-4. The accented vowels are done via `&kp LA(vocal)` (Option+vowel on macOS US) which Karabiner then converts to the accented character
-
-This is a much cleaner solution! The user figured out the right approach: use Karabiner to handle the accented vowels instead of ZMK macros. This avoids the macro issues entirely.
-
-The user also says "imposible funciona perfecto git ... vos te estas equivocando" - they're saying git works fine and I was wrong about the problem. Looking at the new file content, the user solved the problem themselves by:
-1. Removing macros (the likely culprit for the ZMK build failure)
-2. Using `LA(vocal)` key codes instead, with Karabiner handling the conversion
-
-The new design is cleaner and more elegant. The user has already modified the file to reflect this new approach.
-
-So my job now is to:
-1. Acknowledge the user's solution
-2. Show them the current code to paste into git
-3. Also update the `1🌈` copy
-
-But wait - the user said "Continue from where you left off" and then "imposible funciona perfecto git ... vos te estas equivocando". They want me to continue. And the system reminder says the file was modified (by the user or a linter). 
-
-The user seems to be saying that the git side was never the problem, and now they've found the real solution (use Karabiner instead of ZMK macros). They want me to acknowledge this and continue.
-
-Actually, I think the user is just saying: "stop blaming git, it's not git's fault, I figured out the solution myself." They've already updated the file.
-
-My response should:
-1. Acknowledge they found the right solution (Karabiner approach - elegant!)
-2. Show the current code to paste into git
-3. Update the `1🌈` copy to match
-
-Let me also sync the `1🌈` copy with the new content.
-
-The new keymap is much better:
-- No macros (which were causing build issues)
-- Clean use of `LA(vocal)` for accented vowels via Karabiner
-- Reorganized layers: nav_layer (MO1) and sym_layer (MO2)
-- Lots of new symbols in sym_layer
-
-I should just show the code and sync the files.
-</thinking>
-
-Perfecto — la solución que encontraste es elegante: sin macros ZMK, todo pasa por Karabiner con `LA(vocal)`. Mucho más limpio y sin problemas de compilación.
-
-Sincronizo el archivo en `1🌈` con la versión actual:Ambos archivos sincronizados. Este es el código para pegar en GitHub:
-
-```c
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 
 / {
     behaviors {
 
+        /* Tap = ESC  |  Hold = LSHFT */
         shft_esc: shft_esc {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -68,6 +32,7 @@ Sincronizo el archivo en `1🌈` con la versión actual:Ambos archivos sincroniz
             bindings = <&kp>, <&kp>;
         };
 
+        /* Tap = COLON  |  Hold = RSHFT */
         colon_rshft: colon_rshft {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -76,6 +41,7 @@ Sincronizo el archivo en `1🌈` con la versión actual:Ambos archivos sincroniz
             bindings = <&kp>, <&kp>;
         };
 
+        /* Tap = ,  |  Shift+Tap = " */
         comma_dquote: comma_dquote {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
@@ -88,30 +54,35 @@ Sincronizo el archivo en `1🌈` con la versión actual:Ambos archivos sincroniz
     combos {
         compatible = "zmk,combos";
 
+        /* D+F → − */
         combo_minus {
             timeout-ms = <50>;
             key-positions = <15 16>;
             bindings = <&kp MINUS>;
         };
 
+        /* J+K → + */
         combo_plus {
             timeout-ms = <50>;
             key-positions = <19 20>;
             bindings = <&kp PLUS>;
         };
 
+        /* Q+W → ⌘Z */
         combo_undo {
             timeout-ms = <50>;
             key-positions = <1 2>;
             bindings = <&kp LG(Z)>;
         };
 
+        /* M+, → ⌫ */
         combo_bspc {
             timeout-ms = <50>;
             key-positions = <31 32>;
             bindings = <&kp BSPC>;
         };
 
+        /* C+V → ↵ */
         combo_enter {
             timeout-ms = <50>;
             key-positions = <27 28>;
@@ -123,15 +94,36 @@ Sincronizo el archivo en `1🌈` con la versión actual:Ambos archivos sincroniz
     keymap {
         compatible = "zmk,keymap";
 
+        /* ══════════════════════════════════════════════════════════
+         *  CAPA 0 — DEFAULT
+         *
+         *  ┌─────────┬───┬───┬───┬───┬───┐   ┌───┬───┬───┬───┬───┬──────────────┐
+         *  │ ⇧/ESC   │ Q │ W │ E │ R │ T │   │ Y │ U │ I │ O │ P │   :/RSHFT   │
+         *  ├─────────┼───┼───┼───┼───┼───┤   ├───┼───┼───┼───┼───┼─────────────┤
+         *  │ TAB     │ A │ S │ D │ F │ G │   │ H │ J │ K │ L │ ⌫ │   RSHFT    │
+         *  ├─────────┼───┼───┼───┼───┼───┤   ├───┼───┼───┼───┼───┼─────────────┤
+         *  │ LCTRL   │ Z │ X │ C │ V │ B │   │ N │ M │ , │ . │ / │   ↵        │
+         *  └─────────┴───┴───┴───┴───┴───┘   └───┴───┴───┴───┴───┴─────────────┘
+         *                    ┌────┬────┬────┐ ┌──────┬────┬────┐
+         *                    │MO2 │ ⌥  │ ⌘  │ │ HYP  │SPC │MO1 │
+         *                    └────┴────┴────┘ └──────┴────┴────┘
+         * ══════════════════════════════════════════════════════════ */
         default_layer {
             bindings = <
-&shft_esc LSHFT ESC  &kp Q  &kp W  &kp E  &kp R  &kp T      &kp Y  &kp U  &kp I          &kp O    &kp P     &colon_rshft RSHFT COLON
+&shft_esc LSHFT ESC  &kp Q  &kp W  &kp E  &kp R  &kp T      &kp Y  &kp U  &kp I          &kp O    &kp P     &kp COLON
 &kp TAB              &kp A  &kp S  &kp D  &kp F  &kp G      &kp H  &kp J  &kp K          &kp L    &kp BSPC  &kp RSHFT
 &kp LCTRL            &kp Z  &kp X  &kp C  &kp V  &kp B      &kp N  &kp M  &comma_dquote  &kp DOT  &kp FSLH  &kp RET
                               &mo 2  &kp LALT  &kp LGUI      &kp LS(LA(LC(LGUI)))  &kp SPACE  &mo 1
             >;
         };
 
+        /* ══════════════════════════════════════════════════════════
+         *  CAPA 1 — NAV_LAYER (MO1)  —  Azul
+         *
+         *  Números: A=0  S=1  D=2  F=3  G=4   Z=5  X=6  C=7  V=8  B=9
+         *  Flechas: I=↑  J=←  K=↓  L=→
+         *  Resto: transparente
+         * ══════════════════════════════════════════════════════════ */
         nav_layer {
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans    &kp UP    &trans     &trans  &trans
@@ -141,15 +133,24 @@ Sincronizo el archivo en `1🌈` con la versión actual:Ambos archivos sincroniz
             >;
         };
 
+        /* ══════════════════════════════════════════════════════════
+         *  CAPA 2 — SYM_LAYER (MO2)  —  Ámbar
+         *
+         *  Q=!   W=@   E=#   R=)   T=|     Y=&   U=]   I==   O=?   P=%
+         *  A=¡   S=*   D=-   F=(   G=—     H=—   J=[   K=+   L=¿
+         *  Z=F1  X=F2  C=F11 V=F12 B=~     N=$   M=_         /=\
+         *
+         *  F1/F2 = brillo −/+   F11/F12 = volumen −/+
+         *  ¡: LA(N1) via Karabiner / ¿: LA(Z) via Karabiner
+         * ══════════════════════════════════════════════════════════ */
         sym_layer {
             bindings = <
-&trans  &kp GRAVE  &kp LA(N1)  &kp LA(E)  &kp DLLR   &kp PIPE      &kp AMPS   &kp LA(U)  &kp LA(I)  &kp LA(O)  &kp PRCNT  &trans
-&trans  &kp LA(A)  &kp ASTRK   &kp AT     &kp EQUAL   &kp LPAR      &kp RPAR   &kp HASH   &kp LBKT   &kp LA(Z)  &trans     &trans
-&trans  &kp F1     &kp F2      &kp F11    &kp F12     &kp TILDE     &kp LA(N)  &kp UNDER  &trans     &trans     &kp BSLH   &trans
-                                  &trans  &trans      &trans        &trans     &trans     &trans
+&trans  &kp EXCL    &kp AT    &kp HASH   &kp RPAR   &kp PIPE       &kp AMPS   &kp RBKT   &kp EQUAL  &kp QMARK  &kp PRCNT  &trans
+&trans  &kp LA(N1)  &kp ASTRK &kp MINUS  &kp LPAR   &trans         &trans     &kp LBKT   &kp PLUS   &kp LA(Z)  &trans     &trans
+&trans  &kp F1      &kp F2    &kp F11    &kp F12    &kp TILDE      &kp DLLR   &kp UNDER  &trans     &trans     &kp BSLH   &trans
+                                 &trans  &trans     &trans         &trans     &trans     &trans
             >;
         };
 
     };
 };
-```
