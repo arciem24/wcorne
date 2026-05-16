@@ -1,8 +1,8 @@
 /*
  * CAPAS:
  * Capa 0  default_layer   escritura base
- * Capa 1  nav_layer       navegacion y numeros
- * Capa 2  sym_layer       simbolos
+ * Capa 1  nav_layer       MO1 - navegacion y numeros
+ * Capa 2  sym_layer       MO2 - simbolos
  *
  * COMBOS:
  *   D+F  ( 9+10) -> MINUS
@@ -84,10 +84,10 @@
 
         sym_layer {
             bindings = 
-&trans  &kp EXCL    &kp QMARK      &kp RBKT  &kp RPAR  &kp PIPE    &kp AMPS  &kp AT    &kp EQUAL  &kp PRCNT  &trans     &trans
-&trans  &kp LA(N1)  &kp LA(QMARK)  &kp LBKT  &kp LPAR  &kp STAR    &kp HASH  &kp LEFT  &kp DOWN   &kp UP     &kp RIGHT  &trans
-&trans  &kp F1      &kp F2         &kp F11   &kp F12   &kp TILDE   &kp DLLR  &kp UNDER &trans     &trans     &kp BSLH   &trans
-                                     &trans  &trans    &trans      &trans    &trans    &trans
+&trans  &kp EXCL   &kp QMARK  &kp RBKT  &kp RPAR  &kp PIPE    &kp AMPS  &kp AT    &kp EQUAL  &kp PRCNT  &trans     &trans
+&trans  &kp LA(N1) &kp LA(N2) &kp LBKT  &kp LPAR  &kp STAR    &kp HASH  &kp LEFT  &kp DOWN   &kp UP     &kp RIGHT  &trans
+&trans  &kp F1     &kp F2     &kp F11   &kp F12   &kp TILDE   &kp DLLR  &kp UNDER &trans     &trans     &kp BSLH   &trans
+                                &trans  &trans    &trans      &trans    &trans    &trans
             >;
         };
     };
