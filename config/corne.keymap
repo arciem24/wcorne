@@ -16,7 +16,7 @@
 / {
     behaviors {
 
-        /* Tap = TAB  |  Hold = ESCAPE */
+        /* Tap = TAB  |  Hold = ESC */
         shft_esc: shft_esc {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -25,7 +25,7 @@
             bindings = <&kp>, <&kp>;
         };
 
-        /* Tap = CAPSLOCK  |  Hold = LSFT */
+        /* Tap = CAPS  |  Hold = LSFT */
         tab_shft: tab_shft {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -80,27 +80,27 @@
 
         default_layer {
             bindings = 
-&shft_esc ESCAPE TAB     &kp Q  &kp W  &kp E  &kp R  &kp T      &kp Y  &kp U  &kp I          &kp O    &kp P     &colon_semi
-&tab_shft LSFT CAPSLOCK  &kp A  &kp S  &kp D  &kp F  &kp G      &kp H  &kp J  &kp K          &kp L    &kp P     &kp BSPC
-&kp LCTRL                &kp Z  &kp X  &kp C  &kp V  &kp B      &kp N  &kp M  &comma_dquote  &kp DOT  &kp FSLH  &kp RET
-                                  &mo 2  &kp LALT  &kp LGUI      &kp LS(LA(LC(LGUI)))  &kp SPACE  &mo 1
+&shft_esc ESC TAB    &kp Q  &kp W  &kp E  &kp R  &kp T    &kp Y  &kp U  &kp I          &kp O    &kp P     &colon_semi
+&tab_shft LSFT CAPS  &kp A  &kp S  &kp D  &kp F  &kp G    &kp H  &kp J  &kp K          &kp L    &kp P     &kp BSPC
+&kp LCTRL            &kp Z  &kp X  &kp C  &kp V  &kp B    &kp N  &kp M  &comma_dquote  &kp DOT  &kp FSLH  &kp RET
+                              &mo 2  &kp LALT  &kp LGUI    &kp LS(LA(LC(LGUI)))  &kp SPACE  &mo 1
             >;
         };
 
         nav_layer {
             bindings = 
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans    &trans    &trans     &trans     &trans
-&trans  &kp N0  &kp N1  &kp N2  &kp N3  &kp N4      &trans  &kp LEFT  &kp DOWN  &kp UP     &kp RIGHT  &trans
-&trans  &kp N5  &kp N6  &kp N7  &kp N8  &kp N9      &trans  &trans    &trans    &trans     &trans     &trans
-                          &trans  &trans  &trans      &trans  &trans    &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans    &trans    &trans  &trans     &trans
+&trans  &kp N0  &kp N1  &kp N2  &kp N3  &kp N4    &trans  &kp LEFT  &kp DOWN  &kp UP  &kp RIGHT  &trans
+&trans  &kp N5  &kp N6  &kp N7  &kp N8  &kp N9    &trans  &trans    &trans    &trans  &trans     &trans
+                          &trans  &trans  &trans    &trans  &trans    &trans
             >;
         };
 
         sym_layer {
             bindings = 
-&trans  &kp EXCL    &kp QMARK     &kp RBKT  &kp RPAR  &kp PIPE    &kp AMPS  &kp AT    &kp EQUAL  &kp PRCNT  &trans     &trans
-&trans  &kp LA(N1)  &kp LA(QMARK) &kp LBKT  &kp LPAR  &kp ASTRK   &kp HASH  &kp LEFT  &kp DOWN   &kp UP     &kp RIGHT  &trans
-&trans  &kp F1      &kp F2        &kp F11   &kp F12   &kp TILDE   &kp DLLR  &kp UNDER &trans     &trans     &kp BSLH   &trans
+&trans  &kp EXCL    &kp QMARK      &kp RBKT  &kp RPAR  &kp PIPE    &kp AMPS  &kp AT    &kp EQUAL  &kp PRCNT  &trans     &trans
+&trans  &kp LA(N1)  &kp LA(QMARK)  &kp LBKT  &kp LPAR  &kp ASTRK   &kp HASH  &kp LEFT  &kp DOWN   &kp UP     &kp RIGHT  &trans
+&trans  &kp F1      &kp F2         &kp F11   &kp F12   &kp TILDE   &kp DLLR  &kp UNDER &trans     &trans     &kp BSLH   &trans
                                      &trans  &trans    &trans      &trans    &trans    &trans
             >;
         };
