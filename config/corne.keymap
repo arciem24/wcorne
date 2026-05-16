@@ -1,22 +1,19 @@
 /*
  * CAPAS:
  * Capa 0  default_layer   escritura base
- * Capa 1  nav_layer       MO1 - navegacion y numeros
- * Capa 2  sym_layer       MO2 - simbolos
+ * Capa 1  nav_layer       navegacion y numeros
+ * Capa 2  sym_layer       simbolos
  *
  * COMBOS:
  *   D+F  ( 9+10) -> MINUS
  *   J+K  (28+29) -> PLUS
  *   Q+W  ( 1+ 2) -> LG(Z)
  */
-
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 
 / {
     behaviors {
-
-        /* Tap = TAB  |  Hold = ESC */
         shft_esc: shft_esc {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -24,8 +21,6 @@
             tapping-term-ms = <200>;
             bindings = <&kp>, <&kp>;
         };
-
-        /* Tap = CAPS  |  Hold = LSFT */
         tab_shft: tab_shft {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -33,46 +28,37 @@
             tapping-term-ms = <200>;
             bindings = <&kp>, <&kp>;
         };
-
-        /* Tap = :  |  Shift = ; */
         colon_semi: colon_semi {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp LS(SEMI)>, <&kp SEMI>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
-
-        /* Tap = ,  |  Shift = " */
         comma_dquote: comma_dquote {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp COMMA>, <&kp LS(SQT)>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
-
     };
 
     combos {
         compatible = "zmk,combos";
-
         combo_minus {
             timeout-ms = <50>;
             key-positions = <9 10>;
             bindings = <&kp MINUS>;
         };
-
         combo_plus {
             timeout-ms = <50>;
             key-positions = <28 29>;
             bindings = <&kp PLUS>;
         };
-
         combo_undo {
             timeout-ms = <50>;
             key-positions = <1 2>;
             bindings = <&kp LG(Z)>;
         };
-
     };
 
     keymap {
@@ -81,7 +67,7 @@
         default_layer {
             bindings = 
 &shft_esc ESC TAB    &kp Q  &kp W  &kp E  &kp R  &kp T    &kp Y  &kp U  &kp I          &kp O    &kp P     &colon_semi
-&tab_shft LSFT CAPS  &kp A  &kp S  &kp D  &kp F  &kp G    &kp H  &kp J  &kp K          &kp L    &kp P     &kp BSPC
+&tab_shft LSFT CAPS  &kp A  &kp S  &kp D  &kp F  &kp G    &kp H  &kp J  &kp K          &kp L    &kp SQT   &kp BSPC
 &kp LCTRL            &kp Z  &kp X  &kp C  &kp V  &kp B    &kp N  &kp M  &comma_dquote  &kp DOT  &kp FSLH  &kp RET
                               &mo 2  &kp LALT  &kp LGUI    &kp LS(LA(LC(LGUI)))  &kp SPACE  &mo 1
             >;
@@ -99,11 +85,10 @@
         sym_layer {
             bindings = 
 &trans  &kp EXCL    &kp QMARK      &kp RBKT  &kp RPAR  &kp PIPE    &kp AMPS  &kp AT    &kp EQUAL  &kp PRCNT  &trans     &trans
-&trans  &kp LA(N1)  &kp LA(QMARK)  &kp LBKT  &kp LPAR  &kp ASTRK   &kp HASH  &kp LEFT  &kp DOWN   &kp UP     &kp RIGHT  &trans
+&trans  &kp LA(N1)  &kp LA(QMARK)  &kp LBKT  &kp LPAR  &kp STAR    &kp HASH  &kp LEFT  &kp DOWN   &kp UP     &kp RIGHT  &trans
 &trans  &kp F1      &kp F2         &kp F11   &kp F12   &kp TILDE   &kp DLLR  &kp UNDER &trans     &trans     &kp BSLH   &trans
                                      &trans  &trans    &trans      &trans    &trans    &trans
             >;
         };
-
     };
 };
