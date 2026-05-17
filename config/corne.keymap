@@ -5,9 +5,10 @@
  * Capa 2  sym_layer       MO2 - simbolos
  *
  * COMBOS:
- *   D+F  ( 9+10) -> MINUS  [array idx 3+4 fila1]
- *   J+K  (28+29) -> PLUS   [array idx 7+8 fila1]
- *   Q+W  ( 1+ 2) -> LG(Z)  [array idx 1+2 fila0]
+ *   D+F  (15+16) -> MINUS
+ *   J+K  (19+20) -> PLUS
+ *   Q+W  ( 1+ 2) -> LG(Z)
+ *   C+V  (27+28) -> CAPS
  */
 
 #include <behaviors.dtsi>
@@ -48,13 +49,13 @@
 
         combo_minus {
             timeout-ms = <50>;
-            key-positions = <9 10>;
+            key-positions = <15 16>;
             bindings = <&kp MINUS>;
         };
 
         combo_plus {
             timeout-ms = <50>;
-            key-positions = <28 29>;
+            key-positions = <19 20>;
             bindings = <&kp PLUS>;
         };
 
@@ -62,6 +63,12 @@
             timeout-ms = <50>;
             key-positions = <1 2>;
             bindings = <&kp LG(Z)>;
+        };
+
+        combo_caps {
+            timeout-ms = <50>;
+            key-positions = <27 28>;
+            bindings = <&kp CAPS>;
         };
 
     };
@@ -72,7 +79,7 @@
         default_layer {
             bindings = <
 &shft_esc ESC TAB    &kp Q  &kp W  &kp E  &kp R  &kp T    &kp Y  &kp U  &kp I          &kp O    &kp P     &colon_semi
-&kp RSFT             &kp A  &kp S  &kp D  &kp F  &kp G    &kp H  &kp J  &kp K          &kp L    &kp BSPC  &kp CAPS
+&kp RSFT             &kp A  &kp S  &kp D  &kp F  &kp G    &kp H  &kp J  &kp K          &kp L    &kp BSPC  &kp BSPC
 &kp LCTRL            &kp Z  &kp X  &kp C  &kp V  &kp B    &kp N  &kp M  &comma_dquote  &kp DOT  &kp FSLH  &kp RET
                               &mo 2  &kp LALT  &kp LGUI    &kp LS(LA(LC(LGUI)))  &kp SPACE  &mo 1
             >;
@@ -81,7 +88,7 @@
         nav_layer {
             bindings = <
 &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &kp UP  &trans  &trans  &trans
-&trans  &kp N0  &kp N1  &kp N2  &kp N3  &kp N4    &trans  &kp LEFT  &kp DOWN  &kp RIGHT  &trans  &trans
+&trans  &kp N0  &kp N1  &kp N2  &kp N3  &kp N4    &trans  &kp LEFT  &kp DOWN  &kp RIGHT  &kp RIGHT  &trans
 &trans  &kp N5  &kp N6  &kp N7  &kp N8  &kp N9    &trans  &trans    &trans    &trans  &trans     &trans
                           &trans  &trans  &trans    &trans  &trans    &trans
             >;
@@ -90,7 +97,7 @@
         sym_layer {
             bindings = <
 &trans  &kp EXCL    &kp QMARK      &kp RBKT  &kp RPAR  &kp PIPE    &kp AMPS  &kp AT    &kp UP     &kp EQUAL  &kp PRCNT  &trans
-&trans  &kp LA(N1)  &kp LA(N2)     &kp LBKT  &kp LPAR  &kp STAR    &kp HASH  &kp LEFT  &kp DOWN   &kp RIGHT  &trans     &trans
+&trans  &kp LA(N1)  &kp LA(N2)     &kp LBKT  &kp LPAR  &kp STAR    &kp HASH  &kp LEFT  &kp DOWN   &kp RIGHT  &kp RIGHT  &trans
 &trans  &kp F1      &kp F2         &kp F11   &kp F12   &kp TILDE   &kp DLLR  &kp UNDER &trans     &trans     &kp BSLH   &trans
                                      &trans  &trans    &trans      &trans    &trans    &trans
             >;
