@@ -8,7 +8,7 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
-#define ZMK_POINTING_DEFAULT_MOVE_VAL 900
+#define ZMK_POINTING_DEFAULT_MOVE_VAL 600
 #include <dt-bindings/zmk/pointing.h>
 / {
     behaviors {
@@ -91,8 +91,10 @@
 
 &mmv {
     time-to-max-speed-ms = <40>;
+    acceleration-exponent = <0>;
 };
 
 &msc {
     time-to-max-speed-ms = <40>;
+    acceleration-exponent = <0>;
 };
