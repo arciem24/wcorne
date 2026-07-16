@@ -1,7 +1,9 @@
 /*
- * CAPAS: 0 base | 1 nav (MO1) | 2 sym (MO2) + mouse
+ * CAPAS: 0 base | 1 nav (MO1) | 2 sym (MO2) + mouse + scroll
  * COMBOS: Q+W=undo | Z+X=recorte (Ctrl+Shift+S) | D+F=- | J+K=+ | C+V=CAPS | M+,=RET | C+V+B=BT_CLR
- * MOUSE (MO2): I/J/K/L mueven | D=click izq | F=click der | requiere CONFIG_ZMK_POINTING=y
+ * MO2 pares (base / shift): Q=¡ /!  W=[ /]  E=¿ /?  R=( /)
+ * MOUSE (MO2): I/J/K/L mueven | D=click izq | F=click der
+ * SCROLL (MO2): A=arriba S=abajo | M=izq ,=der
  */
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
@@ -29,6 +31,30 @@
             bindings = <&kp COMMA>, <&kp LS(SQT)>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
+        morph_excl: morph_excl {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp LA(N1)>, <&kp EXCL>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+        morph_brkt: morph_brkt {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp LBKT>, <&kp RBKT>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+        morph_qmark: morph_qmark {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp LA(N2)>, <&kp QMARK>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+        morph_paren: morph_paren {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp LPAR>, <&kp RPAR>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
     };
     combos {
         compatible = "zmk,combos";
@@ -49,20 +75,24 @@
                          &mo 2  &kp LALT  &kp LGUI    &kp LS(LA(LC(LGUI)))  &kp SPACE  &mo 1>;
         };
         nav_layer {
-            bindings = <&trans  &trans  &trans  &trans  &trans  &trans    &kp QMARK  &kp RPAR  &kp UP    &trans     &trans  &trans
-&trans  &kp N0  &kp N1  &kp N2  &kp N3  &kp N4    &trans     &kp LEFT  &kp DOWN  &kp RIGHT  &trans  &trans
-&trans  &kp N5  &kp N6  &kp N7  &kp N8  &kp N9    &trans     &trans    &trans    &trans     &trans  &trans
-                        &trans  &trans  &trans    &trans     &trans    &trans>;
+            bindings = <&trans  &trans  &trans  &trans  &trans  &trans    &trans   &trans    &kp UP    &trans     &trans  &trans
+&trans  &kp N0  &kp N1  &kp N2  &kp N3  &kp N4    &trans   &kp LEFT  &kp DOWN  &kp RIGHT  &trans  &trans
+&trans  &kp N5  &kp N6  &kp N7  &kp N8  &kp N9    &trans   &trans    &trans    &trans     &trans  &trans
+                        &trans  &trans  &trans    &trans   &trans    &trans>;
         };
         sym_layer {
-            bindings = <&trans  &kp EXCL    &kp RBKT  &kp LA(N2)  &kp LPAR   &kp PIPE    &kp AMPS  &kp AT          &mmv MOVE_UP     &kp EQUAL        &kp PRCNT  &trans
-&trans  &kp LA(N1)  &kp LBKT  &mkp LCLK   &mkp RCLK  &kp STAR    &kp HASH  &mmv MOVE_LEFT  &mmv MOVE_DOWN   &mmv MOVE_RIGHT  &trans     &trans
-&trans  &kp F1      &kp F2    &kp F11     &kp F12    &kp TILDE   &kp DLLR  &kp UNDER       &trans           &trans           &kp BSLH   &trans
+            bindings = <&trans  &morph_excl  &morph_brkt  &morph_qmark  &morph_paren  &kp PIPE    &kp AMPS  &kp AT          &mmv MOVE_UP     &kp EQUAL   &kp PRCNT  &trans
+&trans  &msc SCRL_UP  &msc SCRL_DOWN  &mkp LCLK  &mkp RCLK  &kp STAR    &kp HASH  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &trans  &trans
+&trans  &kp F1        &kp F2        &kp F11       &kp F12       &kp TILDE   &kp DLLR  &msc SCRL_LEFT  &msc SCRL_RIGHT  &kp UNDER   &kp BSLH   &trans
                     &trans     &trans     &trans      &trans    &trans          &trans>;
         };
     };
 };
 
 &mmv {
+    time-to-max-speed-ms = <40>;
+};
+
+&msc {
     time-to-max-speed-ms = <40>;
 };
