@@ -1,22 +1,7 @@
 /*
- * CAPAS:
- * Capa 0  default_layer   escritura base
- * Capa 1  nav_layer       MO1 - navegacion y numeros
- * Capa 2  sym_layer       MO2 - simbolos + mouse
- *
- * COMBOS:
- *   Q+W   ( 1+ 2) -> LG(Z)        deshacer
- *   Z+X   (25+26) -> LG(LS(N4))   recorte de pantalla
- *   D+F   (15+16) -> MINUS
- *   J+K   (19+20) -> PLUS
- *   C+V   (27+28) -> CAPS
- *   M+,   (31+32) -> RET          enter
- *   C+V+B (27+28+29) -> BT_CLR_ALL
- *
- * MOUSE (capa MO2):
- *   I/J/K/L -> mover cursor  (&mmv MOVE_UP/LEFT/DOWN/RIGHT)
- *   D -> click izq (&mkp LCLK)   F -> click der (&mkp RCLK)
- *   Requiere CONFIG_ZMK_POINTING=y en el .conf del board.
+ * CAPAS: 0 base | 1 nav (MO1) | 2 sym (MO2) + mouse
+ * COMBOS: Q+W=undo | Z+X=recorte | D+F=- | J+K=+ | C+V=CAPS | M+,=RET | C+V+B=BT_CLR
+ * MOUSE (MO2): I/J/K/L mueven | D=click izq | F=click der | requiere CONFIG_ZMK_POINTING=y
  */
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
@@ -24,7 +9,6 @@
 #include <dt-bindings/zmk/pointing.h>
 / {
     behaviors {
-        /* Tap = TAB  |  Hold = ESC */
         shft_esc: shft_esc {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -32,14 +16,12 @@
             tapping-term-ms = <200>;
             bindings = <&kp>, <&kp>;
         };
-        /* Tap = :  |  Shift = ; */
         colon_semi: colon_semi {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp LS(SEMI)>, <&kp SEMI>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
-        /* Tap = ,  |  Shift = " */
         comma_dquote: comma_dquote {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
@@ -49,67 +31,33 @@
     };
     combos {
         compatible = "zmk,combos";
-        combo_undo {
-            timeout-ms = <50>;
-            key-positions = <1 2>;
-            bindings = <&kp LG(Z)>;
-        };
-        combo_screenshot {
-            timeout-ms = <50>;
-            key-positions = <25 26>;
-            bindings = <&kp LG(LS(N4))>;
-        };
-        combo_minus {
-            timeout-ms = <50>;
-            key-positions = <15 16>;
-            bindings = <&kp MINUS>;
-        };
-        combo_plus {
-            timeout-ms = <50>;
-            key-positions = <19 20>;
-            bindings = <&kp PLUS>;
-        };
-        combo_caps {
-            timeout-ms = <50>;
-            key-positions = <27 28>;
-            bindings = <&kp CAPS>;
-        };
-        combo_enter {
-            timeout-ms = <50>;
-            key-positions = <31 32>;
-            bindings = <&kp RET>;
-        };
-        combo_bt_clr {
-            timeout-ms = <50>;
-            key-positions = <27 28 29>;
-            bindings = <&bt BT_CLR_ALL>;
-        };
+        combo_undo { timeout-ms = <50>; key-positions = <1 2>; bindings = <&kp LG(Z)>; };
+        combo_screenshot { timeout-ms = <50>; key-positions = <25 26>; bindings = <&kp LG(LS(N4))>; };
+        combo_minus { timeout-ms = <50>; key-positions = <15 16>; bindings = <&kp MINUS>; };
+        combo_plus { timeout-ms = <50>; key-positions = <19 20>; bindings = <&kp PLUS>; };
+        combo_caps { timeout-ms = <50>; key-positions = <27 28>; bindings = <&kp CAPS>; };
+        combo_enter { timeout-ms = <50>; key-positions = <31 32>; bindings = <&kp RET>; };
+        combo_bt_clr { timeout-ms = <50>; key-positions = <27 28 29>; bindings = <&bt BT_CLR_ALL>; };
     };
     keymap {
         compatible = "zmk,keymap";
         default_layer {
-            bindings = 
-&shft_esc ESC TAB    &kp Q  &kp W  &kp E  &kp R  &kp T    &kp Y  &kp U  &kp I          &kp O    &kp P     &colon_semi
-&kp RSFT             &kp A  &kp S  &kp D  &kp F  &kp G    &kp H  &kp J  &kp K          &kp L    &kp BSPC  &kp BSPC
-&kp LCTRL            &kp Z  &kp X  &kp C  &kp V  &kp B    &kp N  &kp M  &comma_dquote  &kp DOT  &kp FSLH  &kp RET
-                              &mo 2  &kp LALT  &kp LGUI    &kp LS(LA(LC(LGUI)))  &kp SPACE  &mo 1
-            >;
+            bindings = <&shft_esc ESC TAB   &kp Q  &kp W  &kp E  &kp R  &kp T    &kp Y  &kp U  &kp I          &kp O    &kp P     &colon_semi
+&kp RSFT   &kp A  &kp S  &kp D  &kp F  &kp G    &kp H  &kp J  &kp K          &kp L    &kp BSPC  &kp BSPC
+&kp LCTRL  &kp Z  &kp X  &kp C  &kp V  &kp B    &kp N  &kp M  &comma_dquote  &kp DOT  &kp FSLH  &kp RET
+                         &mo 2  &kp LALT  &kp LGUI    &kp LS(LA(LC(LGUI)))  &kp SPACE  &mo 1>;
         };
         nav_layer {
-            bindings = 
-&trans  &trans  &trans  &trans  &trans  &trans    &kp QMARK  &kp RPAR  &kp UP    &trans     &trans  &trans
+            bindings = <&trans  &trans  &trans  &trans  &trans  &trans    &kp QMARK  &kp RPAR  &kp UP    &trans     &trans  &trans
 &trans  &kp N0  &kp N1  &kp N2  &kp N3  &kp N4    &trans     &kp LEFT  &kp DOWN  &kp RIGHT  &trans  &trans
 &trans  &kp N5  &kp N6  &kp N7  &kp N8  &kp N9    &trans     &trans    &trans    &trans     &trans  &trans
-                          &trans  &trans  &trans    &trans     &trans    &trans
-            >;
+                        &trans  &trans  &trans    &trans     &trans    &trans>;
         };
         sym_layer {
-            bindings = 
-&trans  &kp EXCL    &kp RBKT  &kp LA(N2)  &kp LPAR   &kp PIPE    &kp AMPS  &kp AT          &mmv MOVE_UP     &kp EQUAL        &kp PRCNT  &trans
+            bindings = <&trans  &kp EXCL    &kp RBKT  &kp LA(N2)  &kp LPAR   &kp PIPE    &kp AMPS  &kp AT          &mmv MOVE_UP     &kp EQUAL        &kp PRCNT  &trans
 &trans  &kp LA(N1)  &kp LBKT  &mkp LCLK   &mkp RCLK  &kp STAR    &kp HASH  &mmv MOVE_LEFT  &mmv MOVE_DOWN   &mmv MOVE_RIGHT  &trans     &trans
 &trans  &kp F1      &kp F2    &kp F11     &kp F12    &kp TILDE   &kp DLLR  &kp UNDER       &trans           &trans           &kp BSLH   &trans
-                                &trans     &trans     &trans      &trans    &trans          &trans
-            >;
+                    &trans     &trans     &trans      &trans    &trans          &trans>;
         };
     };
 };
