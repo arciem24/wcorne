@@ -15,6 +15,7 @@
 #define ZMK_POINTING_DEFAULT_MOVE_VAL 450
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 20
 #include <dt-bindings/zmk/pointing.h>
+#include <input/processors.dtsi>
 / {
     behaviors {
         colon_semi: colon_semi {
