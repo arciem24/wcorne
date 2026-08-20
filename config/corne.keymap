@@ -4,6 +4,7 @@
  *         C+V=CAPS | V+B=cerrar ventana | ESC+SHFT+CTRL=bloquear pantalla
  *         W+E+R=zoom out (cmd-) | U+I+O=zoom in (cmd+)
  *         HYPER+Q=cmd-Q | HYPER+W=cmd-W | HYPER+BSPC=cmd-BSPC
+ *         HYPER+J / HYPER+L / HYPER+, = hyper real, tambien dentro de MO2
  *         ,+.+/+RET=apagar (HYPER+F13 -> Karabiner) | :+DEL+RET=BT_CLR
  * MO1 pares (base / shift): Q=¡ /!  W=[ /]  E=¿ /?  R=( /)
  * MO2: I/J/K/L mueven | D=click der | F=click izq | G=click medio
@@ -17,7 +18,7 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
-#define ZMK_POINTING_DEFAULT_MOVE_VAL 600
+#define ZMK_POINTING_DEFAULT_MOVE_VAL 650
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 20
 #include <dt-bindings/zmk/pointing.h>
 #include <input/processors.dtsi>
@@ -70,6 +71,9 @@
     };
     combos {
         compatible = "zmk,combos";
+        combo_hyper_j    { timeout-ms = <150>; key-positions = <39 19>;       bindings = <&kp LS(LA(LC(LG(J))))>; };
+        combo_hyper_l    { timeout-ms = <150>; key-positions = <39 21>;       bindings = <&kp LS(LA(LC(LG(L))))>; };
+        combo_hyper_comma{ timeout-ms = <150>; key-positions = <39 32>;       bindings = <&kp LS(LA(LC(LG(COMMA))))>; };
         combo_cmd_q      { timeout-ms = <150>; key-positions = <39 1>;        bindings = <&kp LG(Q)>; };
         combo_cmd_w      { timeout-ms = <150>; key-positions = <39 2>;        bindings = <&kp LG(W)>; };
         combo_cmd_bspc   { timeout-ms = <150>; key-positions = <39 22>;       bindings = <&kp LG(BSPC)>; };
