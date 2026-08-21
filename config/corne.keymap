@@ -1,18 +1,17 @@
 /*
  * CAPAS: 0 base | 1 nav+numeros+simbolos (MO1) | 2 puntero+multimedia (MO2) | 3 mouse lento
- * COMBOS: E+R=- | R+T=maximizar | U+I=+ | O+P=redo | A+S=TAB | D+F=2 | J+K=RET | L+BSPC=undo
- *         C+V=CAPS | V+B=cerrar ventana | ESC+SHFT+CTRL=bloquear pantalla
+ * COMBOS: Q+W=cmd-Q | E+R=- | R+T=maximizar | U+I=+ | Y+U=cmd-W | A+S=TAB | D+F=2
+ *         J+K=RET | L+BSPC=deshacer (con shift: rehacer) | V+B=copiar | M+,=pegar
  *         W+E+R=zoom out (cmd-) | U+I+O=zoom in (cmd+)
- *         HYPER+Q=cmd-Q | HYPER+W=cmd-W | HYPER+BSPC=cmd-BSPC
- *         HYPER+J / HYPER+L / HYPER+, = hyper real, tambien dentro de MO2
- *         ,+.+/+RET=apagar (HYPER+F13 -> Karabiner) | :+DEL+RET=BT_CLR
+ *         ESC+SHFT+CTRL=bloquear pantalla | ,+.+/+RET=apagar (HYPER+F13 -> Karabiner)
+ *         :+CAPS+RET=BT_CLR
+ * Los combos de edicion llevan layers = <0 1>; los tres de sistema valen en todas las capas.
  * MO1 pares (base / shift): Q=¡ /!  W=[ /]  E=¿ /?  R=( /)
  * MO2: I/J/K/L mueven | D=click der | F=click izq | G=click medio
  *      A=scroll abajo S=scroll arriba | Z=scroll izq X=scroll der
  *      Q/W=brillo -/+ | E/R=volumen -/+ | M=PgUp ,=PgDn
- *      mouse lento: MO1+MO2 juntos (capa 3), o HYPER/SPC dentro de MO2
- *      pos 36: mantenida = MO2 momentanea | tap corto = MO2 fija (toggle)
- *      22 y 23 (borrado) son transparentes en todas las capas
+ *      mouse lento: MO1+MO2 juntos (capa 3)
+ *      transparentes en MO2: ESC, LSFT, LCTRL, RET, LALT, LGUI, HYPER, SPACE, BSPC, CAPS
  *      el resto de MO2 es &none (requiere CONFIG_ZMK_POINTING=y)
  */
 #include <behaviors.dtsi>
@@ -24,13 +23,11 @@
 #include <input/processors.dtsi>
 / {
     behaviors {
-        /* pos 36: mantenido = capa 2 momentanea | tap corto = capa 2 fija */
-        mo_tog: mo_tog {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            flavor = "hold-preferred";
-            tapping-term-ms = <200>;
-            bindings = <&mo>, <&tog>;
+        undo_redo: undo_redo {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp LG(Z)>, <&kp LG(LS(Z))>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
         };
         colon_semi: colon_semi {
             compatible = "zmk,behavior-mod-morph";
@@ -71,24 +68,19 @@
     };
     combos {
         compatible = "zmk,combos";
-        combo_hyper_j    { timeout-ms = <150>; key-positions = <39 19>;       bindings = <&kp LS(LA(LC(LG(J))))>; };
-        combo_hyper_l    { timeout-ms = <150>; key-positions = <39 21>;       bindings = <&kp LS(LA(LC(LG(L))))>; };
-        combo_hyper_comma{ timeout-ms = <150>; key-positions = <39 32>;       bindings = <&kp LS(LA(LC(LG(COMMA))))>; };
-        combo_cmd_q      { timeout-ms = <150>; key-positions = <39 1>;        bindings = <&kp LG(Q)>; };
-        combo_cmd_w      { timeout-ms = <150>; key-positions = <39 2>;        bindings = <&kp LG(W)>; };
-        combo_cmd_bspc   { timeout-ms = <150>; key-positions = <39 22>;       bindings = <&kp LG(BSPC)>; };
-        combo_zoom_out   { timeout-ms = <60>; key-positions = <2 3 4>;       bindings = <&kp LG(MINUS)>; };
-        combo_zoom_in    { timeout-ms = <60>; key-positions = <7 8 9>;       bindings = <&kp LG(EQUAL)>; };
-        combo_minus_er   { timeout-ms = <50>; key-positions = <3 4>;         bindings = <&kp MINUS>; };
-        combo_fullscreen { timeout-ms = <50>; key-positions = <4 5>;         bindings = <&kp LC(LG(F))>; };
-        combo_plus_ui    { timeout-ms = <50>; key-positions = <7 8>;         bindings = <&kp PLUS>; };
-        combo_redo       { timeout-ms = <50>; key-positions = <9 10>;        bindings = <&kp LG(LS(Z))>; };
-        combo_tab        { timeout-ms = <50>; key-positions = <13 14>;       bindings = <&kp TAB>; };
-        combo_two        { timeout-ms = <50>; key-positions = <15 16>;       bindings = <&kp N2>; };
-        combo_enter_jk   { timeout-ms = <50>; key-positions = <19 20>;       bindings = <&kp RET>; };
-        combo_undo       { timeout-ms = <50>; key-positions = <21 22>;       bindings = <&kp LG(Z)>; };
-        combo_caps       { timeout-ms = <50>; key-positions = <27 28>;       bindings = <&kp CAPS>; };
-        combo_close_win  { timeout-ms = <50>; key-positions = <28 29>;       bindings = <&kp LG(W)>; };
+        combo_cmd_q      { timeout-ms = <50>;  key-positions = <1 2>;         layers = <0 1>; bindings = <&kp LG(Q)>; };
+        combo_zoom_out   { timeout-ms = <60>; key-positions = <2 3 4>;       layers = <0 1>; bindings = <&kp LG(MINUS)>; };
+        combo_zoom_in    { timeout-ms = <60>; key-positions = <7 8 9>;       layers = <0 1>; bindings = <&kp LG(EQUAL)>; };
+        combo_minus_er   { timeout-ms = <50>; key-positions = <3 4>;         layers = <0 1>; bindings = <&kp MINUS>; };
+        combo_fullscreen { timeout-ms = <50>; key-positions = <4 5>;         layers = <0 1>; bindings = <&kp LC(LG(F))>; };
+        combo_plus_ui    { timeout-ms = <50>; key-positions = <7 8>;         layers = <0 1>; bindings = <&kp PLUS>; };
+        combo_cmd_w      { timeout-ms = <50>; key-positions = <6 7>;         layers = <0 1>; bindings = <&kp LG(W)>; };
+        combo_tab        { timeout-ms = <50>; key-positions = <13 14>;       layers = <0 1>; bindings = <&kp TAB>; };
+        combo_two        { timeout-ms = <50>; key-positions = <15 16>;       layers = <0 1>; bindings = <&kp N2>; };
+        combo_enter_jk   { timeout-ms = <50>; key-positions = <19 20>;       layers = <0 1>; bindings = <&kp RET>; };
+        combo_undo_redo  { timeout-ms = <50>; key-positions = <21 22>;       layers = <0 1>; bindings = <&undo_redo>; };
+        combo_copy       { timeout-ms = <50>; key-positions = <28 29>;       layers = <0 1>; bindings = <&kp LG(C)>; };
+        combo_paste      { timeout-ms = <50>; key-positions = <31 32>;       layers = <0 1>; bindings = <&kp LG(V)>; };
         combo_lock       { timeout-ms = <50>; key-positions = <0 12 24>;     bindings = <&kp LC(LG(Q))>; };
         combo_shutdown   { timeout-ms = <50>; key-positions = <32 33 34 35>; bindings = <&kp LS(LA(LC(LG(F13))))>; };
         combo_bt_clr     { timeout-ms = <50>; key-positions = <11 23 35>;    bindings = <&bt BT_CLR_ALL>; };
@@ -106,9 +98,9 @@
         default_layer {
             bindings = <
 &kp ESC    &kp Q  &kp W  &kp E  &kp R  &kp T       &kp Y  &kp U  &kp I          &kp O    &kp P     &colon_semi
-&kp LSFT   &kp A  &kp S  &kp D  &kp F  &kp G       &kp H  &kp J  &kp K          &kp L    &kp BSPC  &kp DEL
+&kp LSFT   &kp A  &kp S  &kp D  &kp F  &kp G       &kp H  &kp J  &kp K          &kp L    &kp BSPC  &kp CAPS
 &kp LCTRL  &kp Z  &kp X  &kp C  &kp V  &kp B       &kp N  &kp M  &comma_dquote  &kp DOT  &kp FSLH  &kp RET
-                         &mo_tog 2 2  &kp LALT  &kp LGUI    &kp LS(LA(LC(LGUI)))  &kp SPACE  &mo 1
+                         &mo 2        &kp LALT  &kp LGUI    &kp LS(LA(LC(LGUI)))  &kp SPACE  &mo 1
             >;
         };
 
@@ -123,10 +115,10 @@
 
         mouse_layer {
             bindings = <
-&none   &kp F1          &kp F2           &kp F11    &kp F12    &none        &none  &none           &mmv MOVE_UP    &none            &none  &none
+&trans  &kp F1          &kp F2           &kp F11    &kp F12    &none        &none  &none           &mmv MOVE_UP    &none            &none  &none
 &trans  &msc SCRL_DOWN  &msc SCRL_UP     &mkp RCLK  &mkp LCLK  &mkp MCLK    &none  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &trans &trans
-&trans  &msc SCRL_LEFT  &msc SCRL_RIGHT  &none      &none      &none        &none  &kp PG_UP       &kp PG_DN       &none            &none  &none
-                                         &trans  &trans  &trans             &mo 3   &mo 3  &mo 1
+&trans  &msc SCRL_LEFT  &msc SCRL_RIGHT  &none      &none      &none        &none  &kp PG_UP       &kp PG_DN       &none            &none  &trans
+                                         &trans  &trans  &trans             &trans  &trans  &mo 1
             >;
         };
 
@@ -142,12 +134,12 @@
 };
 
 &mmv {
-    time-to-max-speed-ms = <40>;
+    time-to-max-speed-ms = <0>;
     acceleration-exponent = <0>;
 };
 
 &msc {
-    time-to-max-speed-ms = <40>;
+    time-to-max-speed-ms = <0>;
     acceleration-exponent = <0>;
 };
 
