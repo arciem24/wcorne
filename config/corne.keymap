@@ -1,6 +1,6 @@
 /*
  * CAPAS: 0 base | 1 nav+numeros+simbolos (MO1) | 2 puntero+multimedia (MO2) | 3 mouse lento
- * COMBOS: Q+W=cmd-Q | E+R=- | R+T=maximizar | U+I=+ | Y+U=cmd-W | A+S=TAB | D+F=2
+ * COMBOS: E+R=- | R+T=maximizar | U+I=+ | A+S=TAB | D+F=2
  *         J+K=RET | L+BSPC=deshacer (con shift: rehacer) | V+B=copiar | M+,=pegar
  *         W+E+R=zoom out (cmd-) | U+I+O=zoom in (cmd+)
  *         ESC+SHFT+CTRL=bloquear pantalla | ,+.+/+RET=apagar (HYPER+F13 -> Karabiner)
@@ -68,22 +68,20 @@
     };
     combos {
         compatible = "zmk,combos";
-        combo_cmd_q      { timeout-ms = <50>;  key-positions = <1 2>;         layers = <0 1>; bindings = <&kp LG(Q)>; };
-        combo_zoom_out   { timeout-ms = <60>; key-positions = <2 3 4>;       layers = <0 1>; bindings = <&kp LG(MINUS)>; };
-        combo_zoom_in    { timeout-ms = <60>; key-positions = <7 8 9>;       layers = <0 1>; bindings = <&kp LG(EQUAL)>; };
-        combo_minus_er   { timeout-ms = <50>; key-positions = <3 4>;         layers = <0 1>; bindings = <&kp MINUS>; };
-        combo_fullscreen { timeout-ms = <50>; key-positions = <4 5>;         layers = <0 1>; bindings = <&kp LC(LG(F))>; };
-        combo_plus_ui    { timeout-ms = <50>; key-positions = <7 8>;         layers = <0 1>; bindings = <&kp PLUS>; };
-        combo_cmd_w      { timeout-ms = <50>; key-positions = <6 7>;         layers = <0 1>; bindings = <&kp LG(W)>; };
-        combo_tab        { timeout-ms = <50>; key-positions = <13 14>;       layers = <0 1>; bindings = <&kp TAB>; };
-        combo_two        { timeout-ms = <50>; key-positions = <15 16>;       layers = <0 1>; bindings = <&kp N2>; };
-        combo_enter_jk   { timeout-ms = <50>; key-positions = <19 20>;       layers = <0 1>; bindings = <&kp RET>; };
-        combo_undo_redo  { timeout-ms = <50>; key-positions = <21 22>;       layers = <0 1>; bindings = <&undo_redo>; };
-        combo_copy       { timeout-ms = <50>; key-positions = <28 29>;       layers = <0 1>; bindings = <&kp LG(C)>; };
-        combo_paste      { timeout-ms = <50>; key-positions = <31 32>;       layers = <0 1>; bindings = <&kp LG(V)>; };
-        combo_lock       { timeout-ms = <50>; key-positions = <0 12 24>;     bindings = <&kp LC(LG(Q))>; };
-        combo_shutdown   { timeout-ms = <50>; key-positions = <32 33 34 35>; bindings = <&kp LS(LA(LC(LG(F13))))>; };
-        combo_bt_clr     { timeout-ms = <50>; key-positions = <11 23 35>;    bindings = <&bt BT_CLR_ALL>; };
+        combo_zoom_out   { timeout-ms = <50>; require-prior-idle-ms = <150>; key-positions = <2 3 4>;       layers = <0 1>; bindings = <&kp LG(MINUS)>; };
+        combo_zoom_in    { timeout-ms = <50>; require-prior-idle-ms = <150>; key-positions = <7 8 9>;       layers = <0 1>; bindings = <&kp LG(EQUAL)>; };
+        combo_minus_er   { timeout-ms = <35>; require-prior-idle-ms = <150>; key-positions = <3 4>;         layers = <0 1>; bindings = <&kp MINUS>; };
+        combo_fullscreen { timeout-ms = <35>; require-prior-idle-ms = <150>; key-positions = <4 5>;         layers = <0 1>; bindings = <&kp LC(LG(F))>; };
+        combo_plus_ui    { timeout-ms = <35>; require-prior-idle-ms = <150>; key-positions = <7 8>;         layers = <0 1>; bindings = <&kp PLUS>; };
+        combo_tab        { timeout-ms = <35>; require-prior-idle-ms = <150>; key-positions = <13 14>;       layers = <0 1>; bindings = <&kp TAB>; };
+        combo_two        { timeout-ms = <35>; require-prior-idle-ms = <150>; key-positions = <15 16>;       layers = <0 1>; bindings = <&kp N2>; };
+        combo_enter_jk   { timeout-ms = <35>; require-prior-idle-ms = <150>; key-positions = <19 20>;       layers = <0 1>; bindings = <&kp RET>; };
+        combo_undo_redo  { timeout-ms = <35>; require-prior-idle-ms = <150>; key-positions = <21 22>;       layers = <0 1>; bindings = <&undo_redo>; };
+        combo_copy       { timeout-ms = <35>; require-prior-idle-ms = <150>; key-positions = <28 29>;       layers = <0 1>; bindings = <&kp LG(C)>; };
+        combo_paste      { timeout-ms = <35>; require-prior-idle-ms = <150>; key-positions = <31 32>;       layers = <0 1>; bindings = <&kp LG(V)>; };
+        combo_lock       { timeout-ms = <50>; require-prior-idle-ms = <150>; key-positions = <0 12 24>;     bindings = <&kp LC(LG(Q))>; };
+        combo_shutdown   { timeout-ms = <50>; require-prior-idle-ms = <150>; key-positions = <32 33 34 35>; bindings = <&kp LS(LA(LC(LG(F13))))>; };
+        combo_bt_clr     { timeout-ms = <50>; require-prior-idle-ms = <150>; key-positions = <11 23 35>;    bindings = <&bt BT_CLR_ALL>; };
     };
     conditional_layers {
         compatible = "zmk,conditional-layers";
